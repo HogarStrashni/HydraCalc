@@ -12,6 +12,7 @@
 		"format": "prettier --write .",
 		"db:generate": "drizzle-kit generate:sqlite",
 		"db:push": "drizzle-kit push:sqlite",
+		"db:drop": "drizzle-kit drop",
 		"studio": "drizzle-kit studio",
 		"seed": "tsx --tsconfig scripts/tsconfig.json scripts/seed.ts"
 	},
