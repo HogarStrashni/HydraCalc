@@ -5,3 +5,5 @@ export const pipeTypeTable = sqliteTable('pipe-type', {
 	material: text('material').notNull(),
 	roughness: real('roughness')
 });
+
+export type PipeType = typeof pipeTypeTable.$inferInsert;

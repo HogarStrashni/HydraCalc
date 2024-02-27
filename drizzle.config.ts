@@ -9,7 +9,7 @@ if (!TURSO_DATABASE_URL) {
 }
 
 export default {
-	schema: './src/lib/drizzle/schema.ts',
+	schema: './src/lib/database/schema',
 	out: './migrations',
 	driver: 'turso',
 	dbCredentials: {
