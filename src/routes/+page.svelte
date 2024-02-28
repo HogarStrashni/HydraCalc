@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-
 	export let data;
 
 	const { user, session } = data;
@@ -10,7 +8,7 @@
 	<div class="flex justify-end items-center space-x-4 p-4">
 		{#if user?.id}
 			<h1 class="mr-auto">{user.email}</h1>
-			<form method="post" use:enhance>
+			<form method="post">
 				<button type="submit" class="ml-auto max-w-fit m-4 border-2 px-5 py-3 text-lg rounded-lg">
 					Sign Out
 				</button>

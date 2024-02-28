@@ -1,7 +1,7 @@
 import { lucia } from '$lib/server/auth.js';
 import { fail, redirect } from '@sveltejs/kit';
 
-export const load = async ({ depends, locals: { user, session } }) => {
+export const load = async ({ locals: { user, session } }) => {
 	return {
 		user,
 		session
