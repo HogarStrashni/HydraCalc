@@ -13,5 +13,17 @@ export const lucia = new Lucia(adapter, {
 		attributes: {
 			secure: !dev
 		}
-	}
+	},
+	getUserAttributes: (att) => ({ email: att.email })
 });
+
+interface UserAttributes {
+	email: string;
+}
+
+declare module 'lucia' {
+	interface Register {
+		Lucia: typeof lucia;
+		DatabaseUserAttributes: UserAttributes;
+	}
+}
