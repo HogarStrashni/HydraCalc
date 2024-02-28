@@ -1,1 +1,13 @@
-{"version":"5","dialect":"sqlite","entries":[]}
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1709103540471,
+      "tag": "0000_dapper_invisible_woman",
+      "breakpoints": true
+    }
+  ]
+}
