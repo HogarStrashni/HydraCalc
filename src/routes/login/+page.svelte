@@ -13,7 +13,7 @@
 			<div class="flex flex-col">
 				<label for="password">Password</label>
 				<input
-					type="text"
+					type="password"
 					id="password"
 					name="password"
 					class="border-2 rounded px-2 py-1"
