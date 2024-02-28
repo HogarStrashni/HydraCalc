@@ -8,7 +8,7 @@ export const usersTable = sqliteTable('users', {
 	createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`)
 });
 
-export const usersSessionsTable = sqliteTable('sessions', {
+export const sessionsTable = sqliteTable('sessions', {
 	id: text('id').primaryKey().notNull(),
 	userId: text('user_id')
 		.notNull()
