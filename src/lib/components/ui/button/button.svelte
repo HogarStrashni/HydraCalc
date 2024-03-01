@@ -1,16 +1,21 @@
 <script lang="ts">
-	import { Button as ButtonPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils";
-	import { buttonVariants, type Props, type Events } from ".";
+	import { Button as ButtonPrimitive } from 'bits-ui';
+	import { cn } from '$lib/utils';
+	import { buttonVariants, type Props, type Events } from '.';
 
-	type $$Props = Props;
+	import LoadingSpinner from '@/components/custom-ui/loading-spinner.svelte';
+
+	type $$Props = Props & { icon?: ConstructorOfATypedSvelteComponent; isLoading?: boolean };
 	type $$Events = Events;
 
-	let className: $$Props["class"] = undefined;
-	export let variant: $$Props["variant"] = "default";
-	export let size: $$Props["size"] = "default";
-	export let builders: $$Props["builders"] = [];
+	let className: $$Props['class'] = undefined;
+	export let variant: $$Props['variant'] = 'default';
+	export let size: $$Props['size'] = 'default';
+	export let builders: $$Props['builders'] = [];
 	export { className as class };
+
+	export let icon: $$Props['icon'] = undefined;
+	export let isLoading: $$Props['isLoading'] = undefined;
 </script>
 
 <ButtonPrimitive.Root
@@ -21,5 +26,8 @@
 	on:click
 	on:keydown
 >
+	{#if icon}
+		<svelte:component this={!isLoading ? icon : LoadingSpinner} class="h-4 w-4 mr-2" />
+	{/if}
 	<slot />
 </ButtonPrimitive.Root>
