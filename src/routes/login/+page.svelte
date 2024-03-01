@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { Button } from '@/components/ui/button';
 </script>
 
 <div class="flex flex-col h-full">
@@ -22,7 +23,7 @@
 			</div>
 			<br />
 			<div class="flex justify-end">
-				<button type="submit" class="border-2 w-full py-1.5 rounded-md bg-gray-50">Login</button>
+				<Button type="submit" class="w-full">Login</Button>
 			</div>
 		</form>
 		<div class="flex justify-end">
