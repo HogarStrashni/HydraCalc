@@ -1,7 +1,9 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/stores';
+
 	import { Button } from '@/components/ui/button';
+	import Typography from '@/components/custom-ui/typography.svelte';
 
 	export let data;
 
@@ -13,7 +15,7 @@
 	{#if isLoginRoute}
 		<Button href="/" variant="outline" class="ml-auto max-w-fit">Back</Button>
 	{:else if user?.id}
-		<h1 class="mr-auto">{user.email}</h1>
+		<Typography as="h2" class="mr-auto">{user.email}</Typography>
 		<form method="post">
 			<Button type="submit" variant="outline">Sign Out</Button>
 		</form>

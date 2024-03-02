@@ -5,6 +5,7 @@
 
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
+	import Typography from './typography.svelte';
 
 	import { AlertCircle } from 'lucide-svelte';
 
@@ -37,7 +38,7 @@
 			on:input
 		/>
 
-		<p class="h-4 text-xs font-semibold text-destructive">{error ?? ''}</p>
+		<Typography as="p" class="h-4 text-xs font-semibold text-destructive">{error ?? ''}</Typography>
 		{#if error}
 			<AlertCircle class="absolute right-3 top-1.5 h-5 w-5 text-destructive" />
 		{/if}
