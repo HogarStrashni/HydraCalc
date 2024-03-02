@@ -1,13 +1,6 @@
 import { lucia } from '$lib/server/auth.js';
 import { fail, redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals: { user, session } }) => {
-	return {
-		user,
-		session
-	};
-};
-
 export const actions = {
 	default: async ({ cookies, locals: { session } }) => {
 		if (!session) return fail(401);

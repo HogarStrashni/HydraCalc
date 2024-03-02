@@ -33,6 +33,7 @@
 			{placeholder}
 			class={error ? 'border-destructive' : null}
 			aria-invalid={error ? 'true' : undefined}
+			autocomplete="off"
 			on:input
 		/>
 
