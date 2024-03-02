@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { page } from '$app/stores';
+	import { page, navigating } from '$app/stores';
 
 	import InputField from '@/components/custom-ui/input-field.svelte';
 	import Typography from '@/components/custom-ui/typography.svelte';
@@ -10,6 +10,8 @@
 	import { Chrome, LogIn } from 'lucide-svelte';
 
 	const submitButtonText = $page.url.pathname === '/signin' ? 'Sign In' : 'Sign Up';
+
+	let signingInWithGoogle = false;
 </script>
 
 <Button
@@ -18,6 +20,8 @@
 	size="lg"
 	class="mt-8 w-full text-base"
 	icon={Chrome}
+	bind:isLoading={signingInWithGoogle}
+	on:click={() => (signingInWithGoogle = true)}
 >
 	Continue with Google
 </Button>

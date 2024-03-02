@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import { enhance } from '$app/forms';
 	import { fade } from 'svelte/transition';
 	import { page } from '$app/stores';
 
@@ -12,6 +13,8 @@
 
 	$: ({ user } = data);
 	$: isLoginRoute = ['/signin', '/signup'].includes($page.url.pathname);
+
+	let isSigningOut = false;
 </script>
 
 <header class="flex items-center justify-end space-x-4 border-b pb-4">
@@ -19,8 +22,16 @@
 		<Button href="/" variant="outline" class="ml-auto max-w-fit" icon={ArrowLeft}>Back</Button>
 	{:else if user?.id}
 		<Typography as="h2" class="mr-auto">{user.email}</Typography>
-		<form method="post">
-			<Button type="submit" variant="outline" icon={LogOut}>Sign Out</Button>
+		<form method="post" use:enhance>
+			<Button
+				type="submit"
+				variant="outline"
+				icon={LogOut}
+				bind:isLoading={isSigningOut}
+				on:click={() => (isSigningOut = true)}
+			>
+				Sign Out
+			</Button>
 		</form>
 	{:else}
 		<Button href="/signin" variant="outline" icon={LogIn}>Sign In</Button>
