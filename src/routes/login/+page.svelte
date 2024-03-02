@@ -8,9 +8,9 @@
 	import { Chrome, LogIn } from 'lucide-svelte';
 </script>
 
-<div class="flex flex-col h-full">
-	<Button href="/" variant="secondary" class="m-4 max-w-fit ml-auto">Back</Button>
-	<div class="flex-1 flex flex-col items-center justify-center max-w-96 mx-auto w-full">
+<div class="flex h-full flex-col">
+	<Button href="/" variant="secondary" class="m-4 ml-auto max-w-fit">Back</Button>
+	<div class="mx-auto flex w-full max-w-96 flex-1 flex-col items-center justify-center">
 		<Button
 			href="/api/login/google"
 			variant="secondary"
@@ -22,12 +22,12 @@
 		</Button>
 
 		<!-- custom separator -->
-		<div class="relative mt-8 text-sm w-full flex items-center justify-center">
+		<div class="relative mt-8 flex w-full items-center justify-center text-sm">
 			<Separator class="absolute -z-10" />
-			<p class="px-1.5 pb-1 bg-background">or</p>
+			<p class="bg-background px-1.5 pb-1">or</p>
 		</div>
 
-		<form class="w-full mt-6" method="post" use:enhance>
+		<form class="mt-6 w-full" method="post" use:enhance>
 			<InputField label="Email" name="email" placeholder="example@example.com" />
 			<InputField
 				label="Password"
@@ -36,7 +36,7 @@
 				placeholder="********"
 				class="mt-4"
 			/>
-			<Button type="submit" class="w-full mt-8" size="lg" icon={LogIn}>Login</Button>
+			<Button type="submit" class="mt-8 w-full" size="lg" icon={LogIn}>Login</Button>
 		</form>
 	</div>
 </div>

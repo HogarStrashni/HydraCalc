@@ -38,7 +38,7 @@
 
 		<p class="h-4 text-xs font-semibold text-destructive">{error ?? ''}</p>
 		{#if error}
-			<AlertCircle class="absolute h-5 w-5 text-destructive top-1.5 right-3" />
+			<AlertCircle class="absolute right-3 top-1.5 h-5 w-5 text-destructive" />
 		{/if}
 	</div>
 </div>
