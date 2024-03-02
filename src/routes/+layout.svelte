@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import { fade } from 'svelte/transition';
 	import { page } from '$app/stores';
 
 	import { Button } from '@/components/ui/button';
@@ -24,6 +25,8 @@
 	{/if}
 </header>
 
-<main class="h-full flex-1">
-	<slot />
-</main>
+{#key $page.url.pathname}
+	<main in:fade={{ duration: 300 }} class="h-full flex-1">
+		<slot />
+	</main>
+{/key}
