@@ -27,7 +27,7 @@
 	on:keydown
 >
 	{#if icon}
-		<svelte:component this={!isLoading ? icon : LoadingSpinner} class="h-4 w-4 mr-2" />
+		<svelte:component this={!isLoading ? icon : LoadingSpinner} class="mr-2 h-4 w-4" />
 	{/if}
 	<slot />
 </ButtonPrimitive.Root>

@@ -1,26 +1,12 @@
 <script lang="ts">
-	export let data;
+	import { page } from '$app/stores';
 
-	const { user, session } = data;
+	import Typography from '@/components/custom-ui/typography.svelte';
+
+	$: ({ user, session } = $page.data);
 </script>
 
-<div class="flex flex-col h-full">
-	<div class="flex justify-end items-center space-x-4 p-4">
-		{#if user?.id}
-			<h1 class="mr-auto">{user.email}</h1>
-			<form method="post">
-				<button type="submit" class="ml-auto max-w-fit border-2 px-5 py-3 text-lg rounded-lg">
-					Sign Out
-				</button>
-			</form>
-		{:else}
-			<a href="/login" class="border-2 px-5 py-3 text-lg rounded-lg">Login</a>
-			<a href="/signup" class="border-2 px-5 py-3 text-lg rounded-lg">SignUp</a>
-		{/if}
-	</div>
-
-	<div class="flex flex-1 flex-col justify-center items-center space-y-8">
-		<p>user: {JSON.stringify(user)}</p>
-		<p>session: {JSON.stringify(session)}</p>
-	</div>
+<div class="flex h-full flex-col items-center justify-center space-y-8">
+	<Typography as="h3" class="text-center">user: {JSON.stringify(user)}</Typography>
+	<Typography as="h3" class="text-center">session: {JSON.stringify(session)}</Typography>
 </div>

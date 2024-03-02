@@ -5,6 +5,7 @@
 
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
+	import Typography from './typography.svelte';
 
 	import { AlertCircle } from 'lucide-svelte';
 
@@ -13,6 +14,7 @@
 	export let value: HTMLInputAttributes['value'] = undefined;
 	export let disabled: HTMLInputAttributes['disabled'] = undefined;
 	export let placeholder: HTMLInputAttributes['placeholder'] = undefined;
+	export let autocomplete: HTMLInputAttributes['autocomplete'] = 'off';
 
 	let className: HTMLInputAttributes['class'] = undefined;
 	export { className as class };
@@ -31,14 +33,15 @@
 			{value}
 			{disabled}
 			{placeholder}
+			{autocomplete}
 			class={error ? 'border-destructive' : null}
 			aria-invalid={error ? 'true' : undefined}
 			on:input
 		/>
 
-		<p class="h-4 text-xs font-semibold text-destructive">{error ?? ''}</p>
+		<Typography as="p" class="h-4 text-xs font-semibold text-destructive">{error ?? ''}</Typography>
 		{#if error}
-			<AlertCircle class="absolute h-5 w-5 text-destructive top-1.5 right-3" />
+			<AlertCircle class="absolute right-3 top-1.5 h-5 w-5 text-destructive" />
 		{/if}
 	</div>
 </div>

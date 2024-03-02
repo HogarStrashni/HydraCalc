@@ -9,13 +9,17 @@
 </script>
 
 <div class="mx-auto flex h-full w-full max-w-96 flex-col justify-center">
-	<Typography as="h1" class="text-xl">Get started</Typography>
-	<Typography as="p" class="mt-2 text-sm font-medium opacity-50">Create a new account</Typography>
+	<Typography as="h1" class="text-xl">Welcome back</Typography>
+	<Typography as="p" class="mt-2 text-sm font-medium opacity-50">
+		Sign in to your account
+	</Typography>
 
 	<SigninForm {formData} />
 
 	<div class="mt-8 flex justify-center">
-		<Typography as="p" class="h-full text-sm font-medium opacity-70">Have an account?</Typography>
-		<Button href="/signin" variant="link" size="sm" class="h-fit px-1">Sign In Now</Button>
+		<Typography as="p" class="h-full text-sm font-medium opacity-70">
+			Don't have an account?
+		</Typography>
+		<Button href="/signup" variant="link" size="sm" class="h-fit px-1">Sign Up Now</Button>
 	</div>
 </div>
