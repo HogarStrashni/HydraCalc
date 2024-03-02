@@ -6,22 +6,24 @@
 	import { Button } from '@/components/ui/button';
 	import Typography from '@/components/custom-ui/typography.svelte';
 
+	import { ArrowLeft, LogIn, LogOut } from 'lucide-svelte';
+
 	export let data;
 
 	$: ({ user } = data);
-	$: isLoginRoute = ['/login', 'signup'].includes($page.url.pathname);
+	$: isLoginRoute = ['/signin', '/signup'].includes($page.url.pathname);
 </script>
 
 <header class="flex items-center justify-end space-x-4 border-b pb-4">
 	{#if isLoginRoute}
-		<Button href="/" variant="outline" class="ml-auto max-w-fit">Back</Button>
+		<Button href="/" variant="outline" class="ml-auto max-w-fit" icon={ArrowLeft}>Back</Button>
 	{:else if user?.id}
 		<Typography as="h2" class="mr-auto">{user.email}</Typography>
 		<form method="post">
-			<Button type="submit" variant="outline">Sign Out</Button>
+			<Button type="submit" variant="outline" icon={LogOut}>Sign Out</Button>
 		</form>
 	{:else}
-		<Button href="/login" variant="outline">Login</Button>
+		<Button href="/signin" variant="outline" icon={LogIn}>Sign In</Button>
 	{/if}
 </header>
 

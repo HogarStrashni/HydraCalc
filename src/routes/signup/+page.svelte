@@ -1,34 +1,17 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import SigninForm from '@/components/custom-ui/signin-form.svelte';
+	import Typography from '@/components/custom-ui/typography.svelte';
+	import { Button } from '@/components/ui/button';
 </script>
 
-<div class="flex h-full flex-col">
-	<a href="/" class="m-4 ml-auto max-w-fit rounded-lg border-2 px-5 py-3 text-lg">Back</a>
-	<div class="flex flex-1 flex-col items-center justify-center space-y-12">
-		<form class="w-96 space-y-8" method="post" use:enhance>
-			<div class="flex flex-col">
-				<label for="email">Email</label>
-				<input type="text" id="email" name="email" class="rounded border-2 px-2 py-1" required />
-			</div>
-			<div class="flex flex-col">
-				<label for="password">Password</label>
-				<input
-					type="password"
-					id="password"
-					name="password"
-					class="rounded border-2 px-2 py-1"
-					required
-				/>
-			</div>
-			<br />
-			<div class="flex justify-end">
-				<button type="submit" class="w-full rounded-md border-2 bg-gray-50 py-1.5">Sign Up</button>
-			</div>
-		</form>
-		<div class="flex justify-end">
-			<a href="/api/login/google" class="w-96 rounded-md bg-gray-700 py-2 text-center text-white">
-				SIGN IN WITH GOOGLE
-			</a>
-		</div>
+<div class="mx-auto flex h-full w-full max-w-96 flex-col justify-center">
+	<Typography as="h1" class="text-xl">Get started</Typography>
+	<Typography as="p" class="mt-2 text-sm font-medium opacity-50">Create a new account</Typography>
+
+	<SigninForm />
+
+	<div class="mt-8 flex justify-center">
+		<Typography as="p" class="h-full text-sm font-medium opacity-70">Have an account?</Typography>
+		<Button href="/signin" variant="link" size="sm" class="h-fit px-1">Sign In Now</Button>
 	</div>
 </div>
