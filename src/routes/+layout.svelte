@@ -16,18 +16,18 @@
 	$: isLoginRoute = ['/signin', '/signup'].includes($page.url.pathname);
 
 	// delay LoadingStage for 200 ms
-	let isLoadingProgressBar = false;
+	let isProgressBar = false;
 
 	$: if (!!$navigating === true) {
 		setTimeout(() => {
-			isLoadingProgressBar = !!$navigating;
+			isProgressBar = !!$navigating;
 		}, 200);
 	} else {
-		isLoadingProgressBar = false;
+		isProgressBar = false;
 	}
 </script>
 
-{#if isLoadingProgressBar}
+{#if isProgressBar}
 	<ProgressBar />
 {/if}
 
