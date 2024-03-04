@@ -1,0 +1,30 @@
+<script lang="ts">
+	import { enhance } from '$app/forms';
+
+	import InputField from '@/components/custom-ui/input-field.svelte';
+	import Typography from '@/components/custom-ui/typography.svelte';
+	import Button from '@/components/ui/button/button.svelte';
+	import Separator from '@/components/ui/separator/separator.svelte';
+
+	import { Send } from 'lucide-svelte';
+</script>
+
+<div class="mx-auto flex h-full w-full max-w-96 flex-col justify-center">
+	<Typography as="h1" class="text-xl">Reset Your Password</Typography>
+	<Typography as="p" class="mt-2 text-sm font-medium opacity-50">
+		Type in your email and we'll send you a link to reset your password
+	</Typography>
+
+	<form class="relative mt-10 w-full" method="post" use:enhance>
+		<InputField label="Email" name="email" placeholder="example@example.com" autocomplete="on" />
+		<Separator class="mt-4" />
+		<Button type="submit" class="mt-10 w-full" size="lg" icon={Send}>Send Reset Email</Button>
+	</form>
+
+	<div class="mt-8 flex justify-center">
+		<Typography as="p" class="h-full text-sm font-medium opacity-70">
+			Already have an account?
+		</Typography>
+		<Button href="/signin" variant="link" size="sm" class="h-fit px-1">Sign In</Button>
+	</div>
+</div>

@@ -31,9 +31,10 @@ export const GET = async ({ url, cookies }) => {
 		});
 		const googleUser = (await response.json()) as GoogleUser;
 
-		const existingUser = await db.query.usersTable.findFirst({
-			where: eq(usersTable.email, googleUser.email)
-		});
+		const [existingUser] = await db
+			.select()
+			.from(usersTable)
+			.where(eq(usersTable.email, googleUser.email));
 
 		if (existingUser) {
 			const session = await lucia.createSession(existingUser.id, {});
@@ -47,7 +48,8 @@ export const GET = async ({ url, cookies }) => {
 
 			await db.insert(usersTable).values({
 				id: userId,
-				email: googleUser.email
+				email: googleUser.email,
+				emailVerified: true
 			});
 
 			const session = await lucia.createSession(userId, {});
@@ -56,6 +58,13 @@ export const GET = async ({ url, cookies }) => {
 				path: '.',
 				...sessionCookie.attributes
 			});
+		}
+
+		if (existingUser?.emailVerified === false) {
+			await db
+				.update(usersTable)
+				.set({ emailVerified: true })
+				.where(eq(usersTable.id, existingUser.id));
 		}
 
 		return new Response(null, {

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import { enhance } from '$app/forms';
 	import { fade } from 'svelte/transition';
 	import { page, navigating } from '$app/stores';
 
@@ -27,6 +26,11 @@
 	}
 </script>
 
+<!-- add page title on every page -->
+<svelte:head>
+	<title>{`${$page.data.title ?? 'Home'} | HydraCalc`}</title>
+</svelte:head>
+
 {#if isProgressBar}
 	<ProgressBar />
 {/if}
@@ -37,9 +41,7 @@
 			<Button href="/" variant="outline" class="ml-auto max-w-fit" icon={ArrowLeft}>Back</Button>
 		{:else if user?.id}
 			<Typography as="h2" class="mr-auto">{user.email}</Typography>
-			<form method="post" use:enhance>
-				<Button type="submit" variant="outline" icon={LogOut}>Sign Out</Button>
-			</form>
+			<Button href="/api/signout" variant="outline" icon={LogOut}>Sign Out</Button>
 		{:else}
 			<Button href="/signin" variant="outline" icon={LogIn}>Sign In</Button>
 		{/if}

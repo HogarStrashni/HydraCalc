@@ -14,7 +14,10 @@ import { signinFormSchema } from '@/zod-schema.js';
 export const load = async () => {
 	const form = await superValidate(zod(signinFormSchema));
 
-	return { form };
+	return {
+		title: 'Sign Up',
+		form
+	};
 };
 
 export const actions = {
@@ -28,9 +31,7 @@ export const actions = {
 		const email = form.data.email;
 		const password = form.data.password;
 
-		const existingUser = await db.query.usersTable.findFirst({
-			where: eq(usersTable.email, email)
-		});
+		const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.email, email));
 
 		if (existingUser) {
 			return setError(form, '', 'User with current e-mail already exists.');
@@ -42,6 +43,7 @@ export const actions = {
 		await db.insert(usersTable).values({
 			id: userId,
 			email,
+			emailVerified: false,
 			password: hashedPassword
 		});
 
@@ -52,6 +54,6 @@ export const actions = {
 			...sessionCookie.attributes
 		});
 
-		redirect(302, '/');
+		redirect(302, '/email-verification');
 	}
 };
