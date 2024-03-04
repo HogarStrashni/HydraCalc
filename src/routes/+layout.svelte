@@ -26,6 +26,11 @@
 	}
 </script>
 
+<!-- add page title on every page -->
+<svelte:head>
+	<title>{`${$page.data.title ?? 'Home'} | HydraCalc`}</title>
+</svelte:head>
+
 {#if isProgressBar}
 	<ProgressBar />
 {/if}
