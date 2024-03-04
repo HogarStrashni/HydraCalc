@@ -16,3 +16,11 @@ export const sessionsTable = sqliteTable('sessions', {
 		.references(() => usersTable.id),
 	expiresAt: integer('expires_at').notNull()
 });
+
+export const emailVerificationCode = sqliteTable('email_verification_code', {
+	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+	code: text('code').notNull(),
+	userId: text('user_id').unique(),
+	email: text('email').notNull(),
+	expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull()
+});
