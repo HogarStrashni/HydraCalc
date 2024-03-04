@@ -37,7 +37,7 @@
 	<Typography as="span" class="bg-background px-1.5 pb-1">or</Typography>
 </div>
 
-<form class="mt-6 w-full" method="post" use:enhance>
+<form class="relative mt-6 w-full" method="post" use:enhance>
 	<InputField
 		label="Email"
 		name="email"
@@ -57,6 +57,13 @@
 		error={$errors.password?.toString() || $errors._errors?.toString()}
 		on:input={() => ($errors = {})}
 	/>
+	{#if $page.url.pathname === '/signin'}
+		<Button
+			href="/forgot-password"
+			variant="link"
+			class="text-forground absolute right-0 top-[99px] px-0 opacity-50">Forgot password?</Button
+		>
+	{/if}
 	<Button type="submit" class="mt-8 w-full" size="lg" icon={LogIn} disabled={$submitting}>
 		{submitButtonText}
 	</Button>
