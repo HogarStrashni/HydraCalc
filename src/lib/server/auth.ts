@@ -16,7 +16,7 @@ export const lucia = new Lucia(adapter, {
 			secure: !dev
 		}
 	},
-	getUserAttributes: (att) => ({ email: att.email })
+	getUserAttributes: (att) => ({ email: att.email, emailVerified: att.emailVerified })
 });
 
 // GOOGLE OAUTH
@@ -28,6 +28,7 @@ export const google = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, REDIREC
 
 interface UserAttributes {
 	email: string;
+	emailVerified: boolean;
 }
 
 declare module 'lucia' {

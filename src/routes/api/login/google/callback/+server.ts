@@ -47,7 +47,8 @@ export const GET = async ({ url, cookies }) => {
 
 			await db.insert(usersTable).values({
 				id: userId,
-				email: googleUser.email
+				email: googleUser.email,
+				emailVerified: true
 			});
 
 			const session = await lucia.createSession(userId, {});
@@ -56,6 +57,13 @@ export const GET = async ({ url, cookies }) => {
 				path: '.',
 				...sessionCookie.attributes
 			});
+		}
+
+		if (existingUser?.emailVerified === false) {
+			await db
+				.update(usersTable)
+				.set({ emailVerified: true })
+				.where(eq(usersTable.id, existingUser.id));
 		}
 
 		return new Response(null, {

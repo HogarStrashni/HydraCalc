@@ -8,14 +8,9 @@ CREATE TABLE `sessions` (
 CREATE TABLE `users` (
 	`id` text PRIMARY KEY NOT NULL,
 	`email` text NOT NULL,
+	`email_verified` integer DEFAULT false,
 	`password` text,
 	`created_at` text DEFAULT CURRENT_TIMESTAMP
-);
---> statement-breakpoint
-CREATE TABLE `pipe-type` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`material` text NOT NULL,
-	`roughness` real
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);
