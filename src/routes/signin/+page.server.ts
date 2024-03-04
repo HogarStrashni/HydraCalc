@@ -13,7 +13,10 @@ import { signinFormSchema } from '@/zod-schema.js';
 export const load = async () => {
 	const form = await superValidate(zod(signinFormSchema));
 
-	return { form };
+	return {
+		title: 'Sign In',
+		form
+	};
 };
 
 export const actions = {

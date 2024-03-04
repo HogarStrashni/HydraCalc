@@ -14,7 +14,10 @@ import { signinFormSchema } from '@/zod-schema.js';
 export const load = async () => {
 	const form = await superValidate(zod(signinFormSchema));
 
-	return { form };
+	return {
+		title: 'Sign Up',
+		form
+	};
 };
 
 export const actions = {
@@ -42,6 +45,7 @@ export const actions = {
 		await db.insert(usersTable).values({
 			id: userId,
 			email,
+			emailVerified: false,
 			password: hashedPassword
 		});
 
@@ -52,6 +56,6 @@ export const actions = {
 			...sessionCookie.attributes
 		});
 
-		redirect(302, '/');
+		redirect(302, '/email-verification');
 	}
 };
