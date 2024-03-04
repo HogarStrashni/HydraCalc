@@ -6,3 +6,9 @@ export const signinFormSchema = z.object({
 });
 
 export type SigninForm = z.infer<typeof signinFormSchema>;
+
+export const validationCodeSchema = z.object({
+	code: z.string().min(6, { message: 'Enter valid code' })
+});
+
+export type ValidationCode = z.infer<typeof validationCodeSchema>;

@@ -31,9 +31,7 @@ export const actions = {
 		const email = form.data.email;
 		const password = form.data.password;
 
-		const existingUser = await db.query.usersTable.findFirst({
-			where: eq(usersTable.email, email)
-		});
+		const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.email, email));
 
 		if (existingUser) {
 			return setError(form, '', 'User with current e-mail already exists.');

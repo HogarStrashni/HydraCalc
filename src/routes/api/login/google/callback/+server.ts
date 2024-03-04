@@ -31,9 +31,10 @@ export const GET = async ({ url, cookies }) => {
 		});
 		const googleUser = (await response.json()) as GoogleUser;
 
-		const existingUser = await db.query.usersTable.findFirst({
-			where: eq(usersTable.email, googleUser.email)
-		});
+		const [existingUser] = await db
+			.select()
+			.from(usersTable)
+			.where(eq(usersTable.email, googleUser.email));
 
 		if (existingUser) {
 			const session = await lucia.createSession(existingUser.id, {});
