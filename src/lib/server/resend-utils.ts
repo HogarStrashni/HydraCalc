@@ -1,7 +1,7 @@
 import { RESEND_API_KEY } from '$env/static/private';
 import { Resend } from 'resend';
 
-export const sendResetPasswordEmail = (email: string, invitationLink: string) => {
+export const sendResetPasswordEmail = (email: string, verificationLink: string) => {
 	const resend = new Resend(RESEND_API_KEY);
 
 	// add logic for url.origin
@@ -13,7 +13,7 @@ export const sendResetPasswordEmail = (email: string, invitationLink: string) =>
 		html: `<div>
 				<h2>Reset password for your HydraCalc account.</h2>
 				<p>This is an automated message from the HydraCalc App. Click link and enter new password.</p>			
-				<a href=${invitationLink}>Reset password</a>
+				<a href=${verificationLink}>${verificationLink}</a>
 				</div>`
 	});
 };

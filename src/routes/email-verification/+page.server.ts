@@ -1,8 +1,8 @@
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 
 import { sendVerificationCodeEmail } from '@/server/resend-utils';
 
-import { emailVerificationCode, usersTable } from '@/database/schema/auth-schema';
+import { emailVerificationCodeTable, usersTable } from '@/database/schema/auth-schema';
 import { db } from '@/database/db.server';
 import { eq } from 'drizzle-orm';
 
@@ -12,21 +12,21 @@ import { TimeSpan, createDate, isWithinExpirationDate } from 'oslo';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { validationCodeSchema } from '@/zod-schema.js';
+import { validationCodeFormSchema } from '@/zod-schema.js';
 
 export const load = async ({ locals: { user } }) => {
 	if (!user) redirect(302, '/');
 	if (user && user.emailVerified) redirect(302, '/');
 
-	const form = await superValidate(zod(validationCodeSchema));
+	const form = await superValidate(zod(validationCodeFormSchema));
 
 	const { id, email } = user;
 
 	// delete old verification code
-	await db.delete(emailVerificationCode).where(eq(emailVerificationCode.userId, id));
+	await db.delete(emailVerificationCodeTable).where(eq(emailVerificationCodeTable.userId, id));
 	// generate new one and save to db
 	const code = generateRandomString(6, alphabet('0-9'));
-	await db.insert(emailVerificationCode).values({
+	await db.insert(emailVerificationCodeTable).values({
 		code,
 		userId: id,
 		email,
@@ -51,22 +51,26 @@ export const actions = {
 
 		const { id } = user;
 
-		const form = await superValidate(request, zod(validationCodeSchema));
+		const form = await superValidate(request, zod(validationCodeFormSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
 
 		const code = form.data.code;
 
 		// find code-row in db
 		const [dataBaseCodeRow] = await db
 			.select()
-			.from(emailVerificationCode)
-			.where(eq(emailVerificationCode.userId, id));
+			.from(emailVerificationCodeTable)
+			.where(eq(emailVerificationCodeTable.userId, id));
 
 		if (!dataBaseCodeRow || dataBaseCodeRow.code !== code) {
 			return setError(form, 'code', 'Incorrect code');
 		}
 
 		// delete email verification code
-		await db.delete(emailVerificationCode).where(eq(emailVerificationCode.userId, id));
+		await db.delete(emailVerificationCodeTable).where(eq(emailVerificationCodeTable.userId, id));
 
 		if (!isWithinExpirationDate(dataBaseCodeRow.expiresAt)) {
 			return setError(form, 'code', 'Code expired');

@@ -16,22 +16,23 @@
 </script>
 
 <div class="mx-auto flex h-full w-full max-w-96 flex-col justify-center">
-	<Typography as="h1" class="text-xl">Email verification</Typography>
+	<Typography as="h1" class="text-xl">New Password</Typography>
 	<Typography as="p" class="mt-2 text-sm font-medium opacity-50">
-		Check your email and enter code that we sent you
+		Enter your new password
 	</Typography>
 
 	<form class="relative mt-10 w-full" method="post" use:enhance>
 		<InputField
-			label="Code"
-			name="code"
-			placeholder="Enter code..."
-			autocomplete="off"
-			bind:value={$form.code}
-			error={$errors.code?.toString() || $errors._errors?.toString()}
+			label="Password"
+			name="password"
+			type="password"
+			placeholder="******"
+			autocomplete="on"
+			bind:value={$form.password}
+			error={$errors.password?.toString() || $errors._errors?.toString()}
 			on:input={() => ($errors = {})}
 		/>
-		<Separator class="mt-4" />
+		<Separator class="mt-8" />
 		<Button
 			type="submit"
 			class="mt-10 w-full"
@@ -40,14 +41,7 @@
 			disabled={$submitting}
 			isLoading={$submitting}
 		>
-			Confirm
+			Reset Password
 		</Button>
 	</form>
-
-	<div class="mt-8 flex justify-center">
-		<Typography as="p" class="h-full text-sm font-medium opacity-70">
-			Already have an account?
-		</Typography>
-		<Button href="/signin" variant="link" size="sm" class="h-fit px-1">Sign In</Button>
-	</div>
 </div>

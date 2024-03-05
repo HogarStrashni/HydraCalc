@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { superForm } from 'sveltekit-superforms';
 
 	import InputField from '@/components/custom-ui/input-field.svelte';
 	import Typography from '@/components/custom-ui/typography.svelte';
@@ -7,6 +7,12 @@
 	import Separator from '@/components/ui/separator/separator.svelte';
 
 	import { Send } from 'lucide-svelte';
+
+	export let data;
+
+	const { form: formData } = data;
+
+	const { form, errors, submitting, enhance } = superForm(formData);
 </script>
 
 <div class="mx-auto flex h-full w-full max-w-96 flex-col justify-center">
@@ -16,9 +22,26 @@
 	</Typography>
 
 	<form class="relative mt-10 w-full" method="post" use:enhance>
-		<InputField label="Email" name="email" placeholder="example@example.com" autocomplete="on" />
-		<Separator class="mt-4" />
-		<Button type="submit" class="mt-10 w-full" size="lg" icon={Send}>Send Reset Email</Button>
+		<InputField
+			label="Email"
+			name="email"
+			placeholder="example@example.com"
+			autocomplete="on"
+			bind:value={$form.email}
+			error={$errors.email?.toString() || $errors._errors?.toString()}
+			on:input={() => ($errors = {})}
+		/>
+		<Separator class="mt-8" />
+		<Button
+			type="submit"
+			class="mt-10 w-full"
+			size="lg"
+			icon={Send}
+			disabled={$submitting}
+			isLoading={$submitting}
+		>
+			Send Reset Email
+		</Button>
 	</form>
 
 	<div class="mt-8 flex justify-center">
