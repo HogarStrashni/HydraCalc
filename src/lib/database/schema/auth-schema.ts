@@ -17,10 +17,17 @@ export const sessionsTable = sqliteTable('sessions', {
 	expiresAt: integer('expires_at').notNull()
 });
 
-export const emailVerificationCode = sqliteTable('email_verification_code', {
+export const emailVerificationCodeTable = sqliteTable('email_verification_code', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
 	code: text('code').notNull(),
 	userId: text('user_id').unique(),
+	email: text('email').notNull(),
+	expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull()
+});
+
+export const passwordResetTokenTable = sqliteTable('password_reset_code', {
+	id: text('id').primaryKey().notNull(),
+	userId: text('user_id').unique().notNull(),
 	email: text('email').notNull(),
 	expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull()
 });
