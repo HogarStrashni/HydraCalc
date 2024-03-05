@@ -33,7 +33,14 @@
 			on:input={() => ($errors = {})}
 		/>
 		<Separator class="mt-8" />
-		<Button type="submit" class="mt-10 w-full" size="lg" icon={Send} disabled={$submitting}>
+		<Button
+			type="submit"
+			class="mt-10 w-full"
+			size="lg"
+			icon={Send}
+			disabled={$submitting}
+			isLoading={$submitting}
+		>
 			Reset Password
 		</Button>
 	</form>

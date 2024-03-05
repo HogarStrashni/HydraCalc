@@ -64,7 +64,14 @@
 			class="text-forground absolute right-0 top-[99px] px-0 opacity-50">Forgot password?</Button
 		>
 	{/if}
-	<Button type="submit" class="mt-8 w-full" size="lg" icon={LogIn} disabled={$submitting}>
+	<Button
+		type="submit"
+		class="mt-8 w-full"
+		size="lg"
+		icon={LogIn}
+		disabled={$submitting}
+		isLoading={$submitting}
+	>
 		{submitButtonText}
 	</Button>
 </form>
