@@ -1,4 +1,4 @@
-import { lucia } from '$lib/server/auth.js';
+import { lucia } from '$lib/server/auth';
 import { redirect } from '@sveltejs/kit';
 
 export const GET = async ({ cookies, locals: { session } }) => {

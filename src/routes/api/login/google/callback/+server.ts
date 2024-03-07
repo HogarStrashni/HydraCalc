@@ -1,9 +1,9 @@
 import { error, redirect } from '@sveltejs/kit';
 
-import { db } from '$lib/database/db.server.js';
-import { usersTable } from '$lib/database/schema/auth-schema.js';
+import { db } from '$lib/database/db.server';
+import { usersTable } from '$lib/database/schema/auth-schema';
 
-import { google, lucia } from '$lib/server/auth.js';
+import { google, lucia } from '$lib/server/auth';
 import { generateId } from 'lucia';
 import { OAuth2RequestError } from 'arctic';
 
