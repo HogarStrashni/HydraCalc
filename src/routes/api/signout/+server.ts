@@ -1,11 +1,9 @@
-import { lucia } from '$lib/server/auth.js';
-import { redirect } from '@sveltejs/kit';
+import { lucia } from '$lib/server/auth';
+import { error, redirect } from '@sveltejs/kit';
 
 export const GET = async ({ cookies, locals: { session } }) => {
 	if (!session) {
-		return new Response(null, {
-			status: 400
-		});
+		error(400, 'Bad request');
 	}
 
 	await lucia.invalidateSession(session.id);

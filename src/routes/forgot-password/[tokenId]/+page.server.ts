@@ -1,10 +1,10 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-import { passwordResetTokenTable, usersTable } from '@/database/schema/auth-schema.js';
-import { db } from '@/database/db.server.js';
+import { passwordResetTokenTable, usersTable } from '@/database/schema/auth-schema';
+import { db } from '@/database/db.server';
 import { eq } from 'drizzle-orm';
 
-import { lucia } from '@/server/auth.js';
+import { lucia } from '@/server/auth';
 import { Argon2id } from 'oslo/password';
 import { isWithinExpirationDate } from 'oslo';
 

@@ -6,13 +6,13 @@ import { emailVerificationCodeTable, usersTable } from '@/database/schema/auth-s
 import { db } from '@/database/db.server';
 import { eq } from 'drizzle-orm';
 
-import { lucia } from '@/server/auth.js';
+import { lucia } from '@/server/auth';
 import { generateRandomString, alphabet } from 'oslo/crypto';
 import { TimeSpan, createDate, isWithinExpirationDate } from 'oslo';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { validationCodeFormSchema } from '@/zod-schema.js';
+import { validationCodeFormSchema } from '@/zod-schema';
 
 export const load = async ({ locals: { user } }) => {
 	if (!user) redirect(302, '/');
@@ -57,22 +57,22 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		const code = form.data.code;
+		const { code } = form.data;
 
 		// find code-row in db
-		const [dataBaseCodeRow] = await db
+		const [databaseCodeRow] = await db
 			.select()
 			.from(emailVerificationCodeTable)
 			.where(eq(emailVerificationCodeTable.userId, id));
 
-		if (!dataBaseCodeRow || dataBaseCodeRow.code !== code) {
+		if (!databaseCodeRow || databaseCodeRow.code !== code) {
 			return setError(form, 'code', 'Incorrect code');
 		}
 
 		// delete email verification code
 		await db.delete(emailVerificationCodeTable).where(eq(emailVerificationCodeTable.userId, id));
 
-		if (!isWithinExpirationDate(dataBaseCodeRow.expiresAt)) {
+		if (!isWithinExpirationDate(databaseCodeRow.expiresAt)) {
 			return setError(form, 'code', 'Code expired');
 		}
 

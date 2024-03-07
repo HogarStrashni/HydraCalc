@@ -1,9 +1,9 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-import { sendResetPasswordEmail } from '@/server/resend-utils.js';
+import { sendResetPasswordEmail } from '@/server/resend-utils';
 
-import { passwordResetTokenTable, usersTable } from '@/database/schema/auth-schema.js';
-import { db } from '@/database/db.server.js';
+import { passwordResetTokenTable, usersTable } from '@/database/schema/auth-schema';
+import { db } from '@/database/db.server';
 import { eq } from 'drizzle-orm';
 
 import { generateId } from 'lucia';
@@ -11,7 +11,7 @@ import { TimeSpan, createDate } from 'oslo';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { resetPasswordFormSchema } from '@/zod-schema.js';
+import { resetPasswordFormSchema } from '@/zod-schema';
 
 export const load = async () => {
 	const form = await superValidate(zod(resetPasswordFormSchema));
@@ -30,7 +30,7 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		const email = form.data.email;
+		const { email } = form.data;
 
 		const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
 

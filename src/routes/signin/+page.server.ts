@@ -1,14 +1,15 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { db } from '$lib/database/db.server.js';
-import { usersTable } from '$lib/database/schema/auth-schema.js';
+
+import { db } from '$lib/database/db.server';
+import { usersTable } from '$lib/database/schema/auth-schema';
 import { eq } from 'drizzle-orm';
 
-import { lucia } from '$lib/server/auth.js';
+import { lucia } from '$lib/server/auth';
 import { Argon2id } from 'oslo/password';
 
 import { superValidate, setError } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { signinFormSchema } from '@/zod-schema.js';
+import { signinFormSchema } from '@/zod-schema';
 
 export const load = async () => {
 	const form = await superValidate(zod(signinFormSchema));
@@ -27,8 +28,7 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		const email = form.data.email;
-		const password = form.data.password;
+		const { email, password } = form.data;
 
 		const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.email, email));
 
