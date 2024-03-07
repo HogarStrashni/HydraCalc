@@ -30,7 +30,7 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		const email = form.data.email;
+		const { email } = form.data;
 
 		const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
 

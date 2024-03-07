@@ -28,8 +28,7 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		const email = form.data.email;
-		const password = form.data.password;
+		const { email, password } = form.data;
 
 		const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.email, email));
 
