@@ -7,10 +7,13 @@
 	import { AlertCircle, Home } from 'lucide-svelte';
 
 	const status = $page.status as keyof typeof errorList;
-	const errorMessage =
-		$page.error?.message ?? errorList[status]['fallbackMessage'] ?? 'Internal Error';
+	const errorMessage = $page.error?.message;
 	const statusText = errorList[status]['description'] ?? 'Something went wrong... Please try again';
 </script>
+
+<svelte:head>
+	<title>{`Error ${$page.status} | HydraCalc`}</title>
+</svelte:head>
 
 <div class="flex h-full flex-col items-center justify-center px-6">
 	<AlertCircle class="h-20 w-20 text-destructive/80" />
