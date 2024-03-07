@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+	<head>
+		<meta charset="utf-8" />
+		<title>%sveltekit.error.message%</title>
+    <link rel="stylesheet" href="/src/app.css"/>
+	</head>
+
+	<body data-sveltekit-preload-data="hover" class="h-full flex flex-col items-center justify-center px-6">
+    <div class=" text-destructive/80">
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="80" 
+        height="80" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" x2="12" y1="8" y2="12"/>
+        <line x1="12" x2="12.01" y1="16" y2="16"/>
+      </svg>
+    </div>
+    <div class="mt-4 text-xl flex space-x-2">
+      <p id="status">%sveltekit.status%</p>
+      <p>%sveltekit.error.message%</p>
+    </div>
+		<p id="statusText" class="mt-4 text-sm text-center"></p>
+    
+    <a href="/" class="mt-8 h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center rounded-md text-sm font-medium whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+      Back to Home
+    </a>    
+  
+    <script>
+      const statusTexts = {
+        400: 'Your request resulted in an error',
+        401: 'You are not authorized to access this resource',
+        403: 'You have no permission to access this page',
+        404: 'The page you are looking for does not exist or is temporarily unavailable',
+        429: 'You have sent too many requests in a short period of time and exceeded the rate limit',
+        500: 'Looks like server failed to load your request',
+        503: 'Looks like server is temporarily unavailable'
+      };
+
+      const status = document.querySelector("#status").innerText
+      const statusText = statusTexts[status]
+
+      document.querySelector('#statusText').innerText = statusText
+    </script>
+	</body>
+</html>
