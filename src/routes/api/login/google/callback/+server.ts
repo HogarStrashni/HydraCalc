@@ -1,3 +1,5 @@
+import { error, redirect } from '@sveltejs/kit';
+
 import { db } from '$lib/database/db.server.js';
 import { usersTable } from '$lib/database/schema/auth-schema.js';
 
@@ -15,10 +17,7 @@ export const GET = async ({ url, cookies }) => {
 	const storedCodeVerifier = cookies.get('google_oauth_code_verifier');
 
 	if (!code || !state || !storedState || !storedCodeVerifier || state !== storedState) {
-		return new Response(null, {
-			status: 400,
-			statusText: 'Bad Request'
-		});
+		error(400, 'Bad request');
 	}
 
 	try {
@@ -66,24 +65,15 @@ export const GET = async ({ url, cookies }) => {
 				.set({ emailVerified: true })
 				.where(eq(usersTable.id, existingUser.id));
 		}
-
-		return new Response(null, {
-			status: 303,
-			headers: {
-				Location: '/'
-			}
-		});
 	} catch (err) {
 		console.error(err);
 		if (err instanceof OAuth2RequestError) {
-			return new Response(null, {
-				status: 400
-			});
+			error(400, err.message ?? 'Bad request');
 		}
-		return new Response(null, {
-			status: 500
-		});
+		error(500, 'Internal server error');
 	}
+
+	redirect(302, '/');
 };
 
 interface GoogleUser {
