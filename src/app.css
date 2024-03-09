@@ -56,3 +56,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* svoast toaster */
+:root {
+  --svoast-max-width: 320px;
+  --svoast-padding: 10px 20px 10px 18px;
+  --svoast-bg: #f1f5f9;
+	--svoast-text: #020817;
+  --svoast-info-colour: #2563eb;
+  --svoast-error-colour: #dc2626;
+}
+.dark {
+  --svoast-bg: 	#1e293b;
+	--svoast-text: #f8fafc;
+  --svoast-info-colour: #3b82f6;
+  --svoast-error-colour: #7f1d1d;
+}

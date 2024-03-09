@@ -6,7 +6,6 @@
 	import { Button } from '@/components/ui/button';
 	import ProgressBar from '@/components/custom-ui/progress-bar.svelte';
 	import Typography from '@/components/custom-ui/typography.svelte';
-
 	import { Toasts } from 'svoast';
 
 	import { ArrowLeft, LogIn, LogOut } from 'lucide-svelte';
