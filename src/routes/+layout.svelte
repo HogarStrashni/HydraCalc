@@ -7,6 +7,8 @@
 	import ProgressBar from '@/components/custom-ui/progress-bar.svelte';
 	import Typography from '@/components/custom-ui/typography.svelte';
 
+	import { Toasts } from 'svoast';
+
 	import { ArrowLeft, LogIn, LogOut } from 'lucide-svelte';
 
 	export let data;
@@ -34,6 +36,8 @@
 {#if isProgressBar}
 	<ProgressBar />
 {/if}
+
+<Toasts position="bottom-right" />
 
 <div class="mx-auto flex h-[100dvh] max-w-7xl flex-col px-4 py-4 sm:px-8">
 	<header class="flex items-center justify-end space-x-4 border-b pb-4">

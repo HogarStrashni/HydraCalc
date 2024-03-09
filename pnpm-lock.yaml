@@ -100,6 +100,9 @@ devDependencies:
   sveltekit-superforms:
     specifier: ^2.6.2
     version: 2.6.2(@sveltejs/kit@2.5.1)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.19.12)(svelte@4.2.12)
+  svoast:
+    specifier: ^2.4.4
+    version: 2.4.4(svelte@4.2.12)
   tailwindcss:
     specifier: ^3.4.1
     version: 3.4.1
@@ -4330,6 +4333,14 @@ packages:
       - '@types/json-schema'
       - esbuild
       - esbuild-runner
+    dev: true
+
+  /svoast@2.4.4(svelte@4.2.12):
+    resolution: {integrity: sha512-GgyV8qiFL240gYuu1TmP1haibMB2/tjOiN8KB2bFI2y9DFppFN+Gd/Z1ey5CbvaqHtDw5WSrimgq4LTrNEB9tQ==}
+    peerDependencies:
+      svelte: ^4.0.0
+    dependencies:
+      svelte: 4.2.12
     dev: true
 
   /tabbable@6.2.0:
