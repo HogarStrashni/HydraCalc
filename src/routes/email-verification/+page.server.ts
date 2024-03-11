@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-import { sendVerificationCodeEmail } from '@/server/resend-utils';
+import { sendVerificationCodeEmail } from '@/server/mail-resend';
 
 import { emailVerificationCodeTable, usersTable } from '@/database/schema/auth-schema';
 import { db } from '@/database/db.server';

@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-import { sendResetPasswordEmail } from '@/server/resend-utils';
+import { sendResetPasswordEmail } from '@/server/mail-resend';
 
 import { passwordResetTokenTable, usersTable } from '@/database/schema/auth-schema';
 import { db } from '@/database/db.server';
