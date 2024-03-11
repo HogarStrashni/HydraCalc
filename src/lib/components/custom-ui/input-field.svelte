@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '$lib/utils/styleTransition';
+	import { cn } from '$lib/utils/style-transition';
 
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
