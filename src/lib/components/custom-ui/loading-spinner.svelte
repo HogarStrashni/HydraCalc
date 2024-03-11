@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '$lib/utils/styleTransition';
 
 	let className: string | null | undefined = undefined;
 	export { className as class };
