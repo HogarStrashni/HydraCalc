@@ -8,7 +8,7 @@
 	},
 	"aliases": {
 		"components": "$lib/components",
-		"utils": "$lib/utils/styleTransition"
+		"utils": "$lib/utils/style-transition"
 	},
 	"typescript": true
 }
