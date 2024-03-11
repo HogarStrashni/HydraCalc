@@ -12,7 +12,7 @@ import { TimeSpan, createDate, isWithinExpirationDate } from 'oslo';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { validationCodeFormSchema } from '@/zod-schema';
+import { validationCodeFormSchema } from '@/validations/auth-zod-schema';
 
 export const load = async ({ locals: { user } }) => {
 	if (!user) redirect(302, '/');

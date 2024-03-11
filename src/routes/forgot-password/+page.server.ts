@@ -11,7 +11,7 @@ import { TimeSpan, createDate } from 'oslo';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { resetPasswordFormSchema } from '@/zod-schema';
+import { resetPasswordFormSchema } from '@/validations/auth-zod-schema';
 
 export const load = async () => {
 	const form = await superValidate(zod(resetPasswordFormSchema));
