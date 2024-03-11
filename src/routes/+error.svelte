@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 
 	import { Button } from '@/components/ui/button';
-	import { errorList } from '$lib/error-list';
+	import { errorList } from '$lib/utils/error-list';
 
 	import { AlertCircle, Home } from 'lucide-svelte';
 
