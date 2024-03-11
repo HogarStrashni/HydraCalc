@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-import { sendVerificationCodeEmail } from '@/server/resend-utils';
+import { sendVerificationCodeEmail } from '@/server/mail-resend';
 
 import { emailVerificationCodeTable, usersTable } from '@/database/schema/auth-schema';
 import { db } from '@/database/db.server';
@@ -12,7 +12,7 @@ import { TimeSpan, createDate, isWithinExpirationDate } from 'oslo';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { validationCodeFormSchema } from '@/zod-schema';
+import { validationCodeFormSchema } from '@/validations/auth-zod-schema';
 
 export const load = async ({ locals: { user } }) => {
 	if (!user) redirect(302, '/');

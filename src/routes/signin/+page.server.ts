@@ -9,7 +9,7 @@ import { Argon2id } from 'oslo/password';
 
 import { superValidate, setError } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { signinFormSchema } from '@/zod-schema';
+import { signinFormSchema } from '@/validations/auth-zod-schema';
 
 export const load = async () => {
 	const form = await superValidate(zod(signinFormSchema));

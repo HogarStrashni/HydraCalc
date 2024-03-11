@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-import { sendResetPasswordEmail } from '@/server/resend-utils';
+import { sendResetPasswordEmail } from '@/server/mail-resend';
 
 import { passwordResetTokenTable, usersTable } from '@/database/schema/auth-schema';
 import { db } from '@/database/db.server';
@@ -11,7 +11,7 @@ import { TimeSpan, createDate } from 'oslo';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { resetPasswordFormSchema } from '@/zod-schema';
+import { resetPasswordFormSchema } from '@/validations/auth-zod-schema';
 
 export const load = async () => {
 	const form = await superValidate(zod(resetPasswordFormSchema));

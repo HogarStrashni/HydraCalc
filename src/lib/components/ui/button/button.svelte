@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button as ButtonPrimitive } from 'bits-ui';
-	import { cn } from '$lib/utils';
+	import { cn } from '$lib/utils/style-transition';
 	import { buttonVariants, type Props, type Events } from '.';
 
 	import LoadingSpinner from '@/components/custom-ui/loading-spinner.svelte';
