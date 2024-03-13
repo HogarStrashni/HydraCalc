@@ -3,7 +3,10 @@ import { error, type Cookies } from '@sveltejs/kit';
 import { lucia, google } from '$lib/server/auth';
 
 import { generateId } from 'lucia';
+
+import { TimeSpan, createDate, type TimeSpanUnit } from 'oslo';
 import { Argon2id } from 'oslo/password';
+import { alphabet, generateRandomString } from 'oslo/crypto';
 
 export const createSessionCookie = async (id: string, attrs = {}) => {
 	const session = await lucia.createSession(id, attrs);
@@ -16,6 +19,12 @@ export const getHashedPassword = async (password: string) => await new Argon2id(
 
 export const validatePassword = async (userPassword: string, inputFieldPassword: string) =>
 	await new Argon2id().verify(userPassword, inputFieldPassword);
+
+export const generateNumericCode = (length: number) =>
+	generateRandomString(length, alphabet('0-9'));
+
+export const getExpiresAtDate = (value: number, unit: TimeSpanUnit) =>
+	createDate(new TimeSpan(value, unit));
 
 // Get User after success google authentication
 export const getGoogleAuthenticatedUser = async (url: URL, cookies: Cookies) => {

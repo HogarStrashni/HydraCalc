@@ -1,11 +1,18 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { signinFormSchema } from '@/validations/auth-zod-schema';
 
-import { createCredentialsUser, getExistingUser } from '@/server/db-utils';
-import { createSessionCookie, generateRandomId, getHashedPassword } from '@/server/auth-utils';
+import { createCredentialsUser, getExistingUser, setVerificationCode } from '@/server/db-utils';
+import {
+	createSessionCookie,
+	generateNumericCode,
+	generateRandomId,
+	getExpiresAtDate,
+	getHashedPassword
+} from '@/server/auth-utils';
+import { sendVerificationCodeEmail } from '@/server/mail-resend.js';
 
 export const load = async () => {
 	const form = await superValidate(zod(signinFormSchema));
@@ -42,6 +49,22 @@ export const actions = {
 			path: '.',
 			...sessionCookie.attributes
 		});
+
+		const verificationCode = generateNumericCode(6);
+		const expiresAt = getExpiresAtDate(15, 'm');
+
+		const isTransactionSuccess = await setVerificationCode(
+			userId,
+			email,
+			verificationCode,
+			expiresAt
+		);
+
+		if (!isTransactionSuccess) {
+			error(500, 'Internal server error');
+		}
+
+		await sendVerificationCodeEmail(email, verificationCode);
 
 		redirect(302, '/email-verification');
 	}
