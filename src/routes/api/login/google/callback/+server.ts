@@ -3,7 +3,7 @@ import { error, redirect } from '@sveltejs/kit';
 import { createOAuthUser, getExistingUser, setOAuthUserEmailVerifiedTrue } from '@/server/db-utils';
 import {
 	createSessionCookie,
-	generateUserId,
+	generateRandomId,
 	getGoogleAuthenticatedUser
 } from '@/server/auth-utils';
 
@@ -23,7 +23,7 @@ export const GET = async ({ url, cookies }) => {
 				...sessionCookie.attributes
 			});
 		} else {
-			const userId = generateUserId(36);
+			const userId = generateRandomId(36);
 			await createOAuthUser(userId, googleUser.email);
 
 			const sessionCookie = await createSessionCookie(userId);

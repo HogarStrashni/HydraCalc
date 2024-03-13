@@ -1,13 +1,22 @@
 import { error, type Cookies } from '@sveltejs/kit';
 
 import { lucia, google } from '$lib/server/auth';
-import { OAuth2RequestError } from 'arctic';
 
 import { generateId } from 'lucia';
+import { Argon2id } from 'oslo/password';
 
-interface GoogleUser {
-	email: string;
-}
+export const createSessionCookie = async (id: string, attrs = {}) => {
+	const session = await lucia.createSession(id, attrs);
+	return lucia.createSessionCookie(session.id);
+};
+
+export const generateRandomId = (length = 32) => {
+	return generateId(length);
+};
+
+export const validatePassword = async (userPassword: string, inputFieldPassword: string) => {
+	return await new Argon2id().verify(userPassword, inputFieldPassword);
+};
 
 // Get User after success google authentication
 export const getGoogleAuthenticatedUser = async (url: URL, cookies: Cookies) => {
@@ -31,11 +40,6 @@ export const getGoogleAuthenticatedUser = async (url: URL, cookies: Cookies) => 
 	return (await response.json()) as GoogleUser;
 };
 
-export const createSessionCookie = async (id: string, attrs = {}) => {
-	const session = await lucia.createSession(id, attrs);
-	return lucia.createSessionCookie(session.id);
-};
-
-export const generateUserId = (length = 32) => {
-	return generateId(length);
-};
+interface GoogleUser {
+	email: string;
+}
