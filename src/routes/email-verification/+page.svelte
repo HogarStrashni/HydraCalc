@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { enhance as svelteKitEnhance } from '$app/forms';
+
 	import { superForm } from 'sveltekit-superforms';
 
 	import InputField from '@/components/custom-ui/input-field.svelte';
@@ -12,7 +14,9 @@
 
 	const { form: formData } = data;
 
-	const { form, errors, submitting, enhance } = superForm(formData);
+	const { form, errors, submitting, enhance } = superForm(formData, {
+		id: 'verify-email'
+	});
 </script>
 
 <div class="mx-auto flex h-full w-full max-w-96 flex-col justify-center">
@@ -21,7 +25,7 @@
 		Check your email and enter code that we sent you
 	</Typography>
 
-	<form class="relative mt-10 w-full" method="post" use:enhance>
+	<form class="relative mt-10 w-full" method="post" action="?/verification" use:enhance>
 		<InputField
 			label="Code"
 			name="code"
@@ -31,6 +35,15 @@
 			error={$errors.code?.toString() || $errors._errors?.toString()}
 			on:input={() => ($errors = {})}
 		/>
+		<form action="?/new-code" method="POST" use:svelteKitEnhance>
+			<Button
+				type="submit"
+				variant="link"
+				class="text-forground absolute -top-2 right-0 px-0 opacity-50"
+			>
+				Request new Code
+			</Button>
+		</form>
 		<Separator class="mt-4" />
 		<Button
 			type="submit"
