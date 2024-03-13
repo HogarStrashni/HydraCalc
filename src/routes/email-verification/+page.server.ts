@@ -91,7 +91,10 @@ export const actions = {
 			error(500, 'Internal server error');
 		}
 
-		await sendVerificationCodeEmail(email, verificationCode);
+		const { error: err } = await sendVerificationCodeEmail(email, verificationCode);
+		if (err) {
+			error(500, err.message ?? 'Internal server error');
+		}
 
 		redirect(302, '/email-verification');
 	}

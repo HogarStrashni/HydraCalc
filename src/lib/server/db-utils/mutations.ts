@@ -1,5 +1,5 @@
 import { db } from '@/database/db.server';
-import { emailVerificationCodeTable, usersTable } from '@/database/schema';
+import { emailVerificationCodeTable, passwordResetTokenTable, usersTable } from '@/database/schema';
 
 import { eq } from 'drizzle-orm';
 
@@ -49,6 +49,27 @@ export const setVerificationCode = async (
 			userId: id,
 			email,
 			code,
+			expiresAt
+		});
+	});
+	return true;
+};
+
+// set password reset token db transaction
+export const setPasswordResetToken = async (
+	tokenId: string,
+	userId: string,
+	email: string,
+	expiresAt: Date
+) => {
+	await db.transaction(async (tx) => {
+		// delete old password reset token
+		await tx.delete(passwordResetTokenTable).where(eq(passwordResetTokenTable.email, email));
+		// generate new one and save to db
+		await tx.insert(passwordResetTokenTable).values({
+			id: tokenId,
+			userId,
+			email,
 			expiresAt
 		});
 	});
