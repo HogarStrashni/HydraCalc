@@ -1,5 +1,5 @@
 import { db } from '@/database/db.server';
-import { usersTable } from '@/database/schema';
+import { emailVerificationCodeTable, usersTable } from '@/database/schema';
 
 import { eq } from 'drizzle-orm';
 
@@ -8,3 +8,11 @@ export const getExistingUser = async (email: string) => {
 	return existingUser;
 };
 export type User = Awaited<ReturnType<typeof getExistingUser>>;
+
+export const getExistingCodeRow = async (userId: string) => {
+	const [existingCodeRow] = await db
+		.select()
+		.from(emailVerificationCodeTable)
+		.where(eq(emailVerificationCodeTable.userId, userId));
+	return existingCodeRow;
+};

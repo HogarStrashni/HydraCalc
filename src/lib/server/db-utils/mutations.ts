@@ -13,6 +13,12 @@ export const createOAuthUser = async (id: string, email: string) => {
 	});
 };
 
+export const setOAuthUserEmailVerifiedTrue = async (user: User) => {
+	if (user?.emailVerified === false) {
+		await db.update(usersTable).set({ emailVerified: true }).where(eq(usersTable.id, user.id));
+	}
+};
+
 export const createCredentialsUser = async (id: string, email: string, password: string) => {
 	await db.insert(usersTable).values({
 		id,
@@ -22,11 +28,11 @@ export const createCredentialsUser = async (id: string, email: string, password:
 	});
 };
 
-export const setOAuthUserEmailVerifiedTrue = async (user: User) => {
-	if (user?.emailVerified === false) {
-		await db.update(usersTable).set({ emailVerified: true }).where(eq(usersTable.id, user.id));
-	}
-};
+export const deleteExistingCodeRow = async (userId: string) =>
+	await db.delete(emailVerificationCodeTable).where(eq(emailVerificationCodeTable.userId, userId));
+
+export const updateEmailVerifiedTrue = async (userId: string) =>
+	await db.update(usersTable).set({ emailVerified: true }).where(eq(usersTable.id, userId));
 
 // set verification code db transaction
 export const setVerificationCode = async (

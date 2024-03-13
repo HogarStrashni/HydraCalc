@@ -4,14 +4,17 @@ import { lucia, google } from '$lib/server/auth';
 
 import { generateId } from 'lucia';
 
-import { TimeSpan, createDate, type TimeSpanUnit } from 'oslo';
+import { TimeSpan, createDate, isWithinExpirationDate, type TimeSpanUnit } from 'oslo';
 import { Argon2id } from 'oslo/password';
 import { alphabet, generateRandomString } from 'oslo/crypto';
 
-export const createSessionCookie = async (id: string, attrs = {}) => {
-	const session = await lucia.createSession(id, attrs);
+export const createSessionCookie = async (userId: string, attrs = {}) => {
+	const session = await lucia.createSession(userId, attrs);
 	return lucia.createSessionCookie(session.id);
 };
+
+export const invalidateAllUserSessions = async (userId: string) =>
+	await lucia.invalidateUserSessions(userId);
 
 export const generateRandomId = (length = 32) => generateId(length);
 
@@ -25,6 +28,9 @@ export const generateNumericCode = (length: number) =>
 
 export const getExpiresAtDate = (value: number, unit: TimeSpanUnit) =>
 	createDate(new TimeSpan(value, unit));
+
+export const isVerificationCodeValid = (expirationDate: Date) =>
+	isWithinExpirationDate(expirationDate);
 
 // Get User after success google authentication
 export const getGoogleAuthenticatedUser = async (url: URL, cookies: Cookies) => {
