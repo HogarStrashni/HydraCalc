@@ -1,17 +1,13 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 
 import { sendResetPasswordEmail } from '@/server/mail-resend';
-
-import { passwordResetTokenTable, usersTable } from '@/database/schema/auth-schema';
-import { db } from '@/database/db.server';
-import { eq } from 'drizzle-orm';
-
-import { generateId } from 'lucia';
-import { TimeSpan, createDate } from 'oslo';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { resetPasswordFormSchema } from '@/validations/auth-zod-schema';
+
+import { getExistingUser, setPasswordResetToken } from '@/server/db-utils';
+import { generateRandomId, getExpiresAtDate } from '@/server/auth-utils';
 
 export const load = async () => {
 	const form = await superValidate(zod(resetPasswordFormSchema));
@@ -32,32 +28,29 @@ export const actions = {
 
 		const { email } = form.data;
 
-		const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+		const existingUser = await getExistingUser(email);
 
-		if (!user) {
+		if (!existingUser) {
 			return setError(form, 'email', 'Email not found');
 		}
 
-		// delete all existing tokens from certain user
-		await db.delete(passwordResetTokenTable).where(eq(passwordResetTokenTable.email, email));
+		const tokenId = generateRandomId(40);
+		const { id } = existingUser;
+		const expiresAt = getExpiresAtDate(1, 'h');
 
-		const tokenId = generateId(40);
+		const isTransactionSuccess = await setPasswordResetToken(tokenId, id, email, expiresAt);
 
-		await db.insert(passwordResetTokenTable).values({
-			id: tokenId,
-			userId: user.id,
-			email,
-			expiresAt: createDate(new TimeSpan(1, 'h'))
-		});
+		if (!isTransactionSuccess) {
+			error(500, 'Internal server error');
+		}
 
 		const pathName = url.origin + url.pathname;
 		const verificationLink = pathName + `/${tokenId}`;
 
-		// send email with verification code
-		(async () => {
-			const { error } = await sendResetPasswordEmail(email, verificationLink);
-			if (error) console.log(error);
-		})();
+		const { error: err } = await sendResetPasswordEmail(email, verificationLink);
+		if (err) {
+			error(500, err.message ?? 'Internal server error');
+		}
 
 		redirect(302, '/');
 	}

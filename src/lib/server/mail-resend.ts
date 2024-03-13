@@ -1,11 +1,9 @@
 import { RESEND_API_KEY } from '$env/static/private';
 import { Resend } from 'resend';
 
-export const sendResetPasswordEmail = (email: string, verificationLink: string) => {
-	const resend = new Resend(RESEND_API_KEY);
+const resend = new Resend(RESEND_API_KEY);
 
-	// add logic for url.origin
-
+export const sendResetPasswordEmail = async (email: string, verificationLink: string) => {
 	return resend.emails.send({
 		from: 'info@sitec.dev',
 		to: email,
@@ -18,9 +16,7 @@ export const sendResetPasswordEmail = (email: string, verificationLink: string) 
 	});
 };
 
-export const sendVerificationCodeEmail = (email: string, verificationCode: string) => {
-	const resend = new Resend(RESEND_API_KEY);
-
+export const sendVerificationCodeEmail = async (email: string, verificationCode: string) => {
 	return resend.emails.send({
 		from: 'info@sitec.dev',
 		to: email,

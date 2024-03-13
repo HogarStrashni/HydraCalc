@@ -1,18 +1,24 @@
-import { fail, redirect } from '@sveltejs/kit';
-
-import { passwordResetTokenTable, usersTable } from '@/database/schema/auth-schema';
-import { db } from '@/database/db.server';
-import { eq } from 'drizzle-orm';
-
-import { lucia } from '@/server/auth';
-import { Argon2id } from 'oslo/password';
-import { isWithinExpirationDate } from 'oslo';
+import { error, fail, redirect } from '@sveltejs/kit';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { newPasswordFormSchema } from '@/validations/auth-zod-schema';
 
-export const load = async () => {
+import { getExistingTokenRow, updateUserPassword } from '@/server/db-utils';
+import {
+	createSessionCookie,
+	getHashedPassword,
+	invalidateAllUserSessions,
+	isVerificationTokenValid
+} from '@/server/auth-utils';
+
+export const load = async ({ params }) => {
+	const existingTokenRow = await getExistingTokenRow(params.tokenId);
+
+	if (!existingTokenRow) {
+		error(400, 'No valid token');
+	}
+
 	const form = await superValidate(zod(newPasswordFormSchema));
 
 	return {
@@ -31,30 +37,34 @@ export const actions = {
 
 		const verificationToken = params.tokenId;
 
-		const [databaseToken] = await db
-			.select()
-			.from(passwordResetTokenTable)
-			.where(eq(passwordResetTokenTable.id, verificationToken));
+		const existingTokenRow = await getExistingTokenRow(verificationToken);
 
-		if (!databaseToken || isWithinExpirationDate(databaseToken.expiresAt)) {
+		if (!existingTokenRow) {
+			setError(form, 'password', 'No valid token');
+		}
+
+		const isExistingTokenValid = isVerificationTokenValid(existingTokenRow.expiresAt);
+
+		if (!isExistingTokenValid) {
 			setError(form, 'password', 'Token expired');
 		}
 
-		const userId = databaseToken.userId;
+		const { userId } = existingTokenRow;
 
-		await db
-			.delete(passwordResetTokenTable)
-			.where(eq(passwordResetTokenTable.id, verificationToken));
+		const { password } = form.data;
+		const hashedPassword = await getHashedPassword(password);
 
-		const password = form.data.password;
+		const isTransactionSuccess = await updateUserPassword(userId, hashedPassword);
 
-		await lucia.invalidateUserSessions(userId);
-		const hashedPassword = await new Argon2id().hash(password);
-		await db.update(usersTable).set({ password: hashedPassword }).where(eq(usersTable.id, userId));
+		if (!isTransactionSuccess) {
+			error(500, 'Internal server error');
+		}
+
+		// invalidate user's sassion
+		await invalidateAllUserSessions(userId);
 
 		// create new user's session
-		const session = await lucia.createSession(userId, {});
-		const sessionCookie = lucia.createSessionCookie(session.id);
+		const sessionCookie = await createSessionCookie(userId);
 		cookies.set(sessionCookie.name, sessionCookie.value, {
 			path: '.',
 			...sessionCookie.attributes
