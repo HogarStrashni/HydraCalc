@@ -10,13 +10,12 @@ export const createSessionCookie = async (id: string, attrs = {}) => {
 	return lucia.createSessionCookie(session.id);
 };
 
-export const generateRandomId = (length = 32) => {
-	return generateId(length);
-};
+export const generateRandomId = (length = 32) => generateId(length);
 
-export const validatePassword = async (userPassword: string, inputFieldPassword: string) => {
-	return await new Argon2id().verify(userPassword, inputFieldPassword);
-};
+export const getHashedPassword = async (password: string) => await new Argon2id().hash(password);
+
+export const validatePassword = async (userPassword: string, inputFieldPassword: string) =>
+	await new Argon2id().verify(userPassword, inputFieldPassword);
 
 // Get User after success google authentication
 export const getGoogleAuthenticatedUser = async (url: URL, cookies: Cookies) => {

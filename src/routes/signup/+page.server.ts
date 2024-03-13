@@ -1,16 +1,11 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-import { db } from '$lib/database/db.server';
-import { usersTable } from '$lib/database/schema/auth-schema';
-import { eq } from 'drizzle-orm';
-
-import { lucia } from '$lib/server/auth';
-import { generateId } from 'lucia';
-import { Argon2id } from 'oslo/password';
-
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { signinFormSchema } from '@/validations/auth-zod-schema';
+
+import { createCredentialsUser, getExistingUser } from '@/server/db-utils';
+import { createSessionCookie, generateRandomId, getHashedPassword } from '@/server/auth-utils';
 
 export const load = async () => {
 	const form = await superValidate(zod(signinFormSchema));
@@ -31,24 +26,18 @@ export const actions = {
 
 		const { email, password } = form.data;
 
-		const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+		const existingUser = await getExistingUser(email);
 
 		if (existingUser) {
 			return setError(form, '', 'User with current e-mail already exists.');
 		}
 
-		const userId = generateId(25);
-		const hashedPassword = await new Argon2id().hash(password);
+		const userId = generateRandomId(36);
+		const hashedPassword = await getHashedPassword(password);
 
-		await db.insert(usersTable).values({
-			id: userId,
-			email,
-			emailVerified: false,
-			password: hashedPassword
-		});
+		await createCredentialsUser(userId, email, hashedPassword);
 
-		const session = await lucia.createSession(userId, {});
-		const sessionCookie = lucia.createSessionCookie(session.id);
+		const sessionCookie = await createSessionCookie(userId);
 		cookies.set(sessionCookie.name, sessionCookie.value, {
 			path: '.',
 			...sessionCookie.attributes

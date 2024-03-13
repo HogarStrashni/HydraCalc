@@ -18,3 +18,12 @@ export const setOAuthUserEmailVerifiedTrue = async (user: User) => {
 		await db.update(usersTable).set({ emailVerified: true }).where(eq(usersTable.id, user.id));
 	}
 };
+
+export const createCredentialsUser = async (id: string, email: string, password: string) => {
+	await db.insert(usersTable).values({
+		id,
+		email,
+		emailVerified: false,
+		password
+	});
+};
