@@ -75,3 +75,17 @@ export const setPasswordResetToken = async (
 	});
 	return true;
 };
+
+// update user password db transaction
+export const updateUserPassword = async (userId: string, password: string) => {
+	await db.transaction(async (tx) => {
+		// delete old password reset token
+		await tx.delete(passwordResetTokenTable).where(eq(passwordResetTokenTable.userId, userId));
+		// update user password
+		await tx
+			.update(usersTable)
+			.set({ password, emailVerified: true })
+			.where(eq(usersTable.id, userId));
+	});
+	return true;
+};

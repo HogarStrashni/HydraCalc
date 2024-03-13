@@ -3,7 +3,6 @@ import { error, type Cookies } from '@sveltejs/kit';
 import { lucia, google } from '$lib/server/auth';
 
 import { generateId } from 'lucia';
-
 import { TimeSpan, createDate, isWithinExpirationDate, type TimeSpanUnit } from 'oslo';
 import { Argon2id } from 'oslo/password';
 import { alphabet, generateRandomString } from 'oslo/crypto';
@@ -30,6 +29,9 @@ export const getExpiresAtDate = (value: number, unit: TimeSpanUnit) =>
 	createDate(new TimeSpan(value, unit));
 
 export const isVerificationCodeValid = (expirationDate: Date) =>
+	isWithinExpirationDate(expirationDate);
+
+export const isVerificationTokenValid = (expirationDate: Date) =>
 	isWithinExpirationDate(expirationDate);
 
 // Get User after success google authentication

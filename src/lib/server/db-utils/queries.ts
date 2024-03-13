@@ -1,5 +1,5 @@
 import { db } from '@/database/db.server';
-import { emailVerificationCodeTable, usersTable } from '@/database/schema';
+import { emailVerificationCodeTable, passwordResetTokenTable, usersTable } from '@/database/schema';
 
 import { eq } from 'drizzle-orm';
 
@@ -15,4 +15,12 @@ export const getExistingCodeRow = async (userId: string) => {
 		.from(emailVerificationCodeTable)
 		.where(eq(emailVerificationCodeTable.userId, userId));
 	return existingCodeRow;
+};
+
+export const getExistingTokenRow = async (token: string) => {
+	const [existingTokenRow] = await db
+		.select()
+		.from(passwordResetTokenTable)
+		.where(eq(passwordResetTokenTable.id, token));
+	return existingTokenRow;
 };
