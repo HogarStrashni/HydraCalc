@@ -12,7 +12,13 @@ import {
 	isVerificationTokenValid
 } from '@/server/auth-utils';
 
-export const load = async () => {
+export const load = async ({ params }) => {
+	const existingTokenRow = await getExistingTokenRow(params.tokenId);
+
+	if (!existingTokenRow) {
+		error(400, 'No valid token');
+	}
+
 	const form = await superValidate(zod(newPasswordFormSchema));
 
 	return {
