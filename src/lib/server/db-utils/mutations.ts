@@ -5,11 +5,12 @@ import { eq } from 'drizzle-orm';
 
 import type { User } from '.';
 
-export const createOAuthUser = async (id: string, email: string) => {
+export const createOAuthUser = async (id: string, email: string, password: string) => {
 	await db.insert(usersTable).values({
 		id,
 		email,
-		emailVerified: true
+		emailVerified: true,
+		password
 	});
 };
 

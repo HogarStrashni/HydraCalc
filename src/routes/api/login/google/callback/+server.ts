@@ -4,7 +4,8 @@ import { createOAuthUser, getExistingUser, setOAuthUserEmailVerifiedTrue } from 
 import {
 	createSessionCookie,
 	generateRandomId,
-	getGoogleAuthenticatedUser
+	getGoogleAuthenticatedUser,
+	getHashedPassword
 } from '@/server/auth-utils';
 
 import { OAuth2RequestError } from 'arctic';
@@ -24,7 +25,11 @@ export const GET = async ({ url, cookies }) => {
 			});
 		} else {
 			const userId = generateRandomId(36);
-			await createOAuthUser(userId, googleUser.email);
+			// create random strong password to standardize the auth flow
+			const password = generateRandomId(24);
+			const hashedPassword = await getHashedPassword(password);
+
+			await createOAuthUser(userId, googleUser.email, hashedPassword);
 
 			const sessionCookie = await createSessionCookie(userId);
 			cookies.set(sessionCookie.name, sessionCookie.value, {
