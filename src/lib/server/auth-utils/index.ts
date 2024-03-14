@@ -28,10 +28,7 @@ export const generateNumericCode = (length: number) =>
 export const getExpiresAtDate = (value: number, unit: TimeSpanUnit) =>
 	createDate(new TimeSpan(value, unit));
 
-export const isVerificationCodeValid = (expirationDate: Date) =>
-	isWithinExpirationDate(expirationDate);
-
-export const isVerificationTokenValid = (expirationDate: Date) =>
+export const isValidExpirationDate = (expirationDate: Date) =>
 	isWithinExpirationDate(expirationDate);
 
 // Get User after success google authentication

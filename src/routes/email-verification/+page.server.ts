@@ -9,7 +9,7 @@ import {
 	generateNumericCode,
 	getExpiresAtDate,
 	invalidateAllUserSessions,
-	isVerificationCodeValid
+	isValidExpirationDate
 } from '@/server/auth-utils';
 import {
 	getExistingCodeRow,
@@ -57,7 +57,7 @@ export const actions = {
 		// delete verification code
 		await deleteExistingCodeRow(id);
 
-		const isExistingCodeValid = isVerificationCodeValid(exisingCodeRow.expiresAt);
+		const isExistingCodeValid = isValidExpirationDate(exisingCodeRow.expiresAt);
 
 		if (!isExistingCodeValid) {
 			return setError(form, 'code', 'Code expired');

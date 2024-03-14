@@ -9,7 +9,7 @@ import {
 	createSessionCookie,
 	getHashedPassword,
 	invalidateAllUserSessions,
-	isVerificationTokenValid
+	isValidExpirationDate
 } from '@/server/auth-utils';
 
 export const load = async ({ params }) => {
@@ -43,7 +43,7 @@ export const actions = {
 			setError(form, 'password', 'No valid token');
 		}
 
-		const isExistingTokenValid = isVerificationTokenValid(existingTokenRow.expiresAt);
+		const isExistingTokenValid = isValidExpirationDate(existingTokenRow.expiresAt);
 
 		if (!isExistingTokenValid) {
 			setError(form, 'password', 'Token expired');
