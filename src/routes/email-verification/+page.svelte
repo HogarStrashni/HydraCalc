@@ -11,7 +11,7 @@
 	import Typography from '@/components/custom-ui/typography.svelte';
 	import Button from '@/components/ui/button/button.svelte';
 	import Separator from '@/components/ui/separator/separator.svelte';
-	import { type RedirectCause, showRedirectToast, toastInfo } from '@/utils/toasts';
+	import { type RedirectCause, showRedirectToast, showFormActionToast } from '@/utils/toasts';
 
 	import { Send } from 'lucide-svelte';
 
@@ -53,9 +53,7 @@
 			method="POST"
 			use:svelteKitEnhance={() =>
 				async ({ result, update }) => {
-					if (result.type === 'redirect' && result.location === '/email-verification') {
-						toastInfo('Your new validation code has been sent... Check your email!');
-					}
+					showFormActionToast('validation-code', result);
 					await update();
 				}}
 		>

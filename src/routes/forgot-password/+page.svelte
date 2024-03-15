@@ -5,9 +5,9 @@
 	import Typography from '@/components/custom-ui/typography.svelte';
 	import Button from '@/components/ui/button/button.svelte';
 	import Separator from '@/components/ui/separator/separator.svelte';
+	import { showFormActionToast } from '@/utils/toasts';
 
 	import { Send } from 'lucide-svelte';
-	import { toastInfo } from '@/utils/toasts';
 
 	export let data;
 
@@ -15,9 +15,7 @@
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
 		onResult: ({ result }) => {
-			if (result.type === 'redirect' && result.location === '/') {
-				toastInfo('Reset password link has been sent... Check your email!');
-			}
+			showFormActionToast('reset-password', result);
 		}
 	});
 </script>

@@ -7,20 +7,16 @@
 	import Typography from '@/components/custom-ui/typography.svelte';
 	import { Button } from '@/components/ui/button';
 	import { Separator } from '@/components/ui/separator';
+	import { showFormActionToast } from '@/utils/toasts';
 
 	import { Chrome, LogIn } from 'lucide-svelte';
-	import { toastInfo } from '@/utils/toasts';
 
 	export let formData;
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
 		onResult: ({ result }) => {
-			if (
-				$page.url.pathname === '/signin' &&
-				result.type === 'redirect' &&
-				result.location === '/email-verification'
-			) {
-				toastInfo('You succesfully signed in... Please verify your email!');
+			if ($page.url.pathname === '/signin') {
+				showFormActionToast('verify-email', result);
 			}
 		}
 	});
