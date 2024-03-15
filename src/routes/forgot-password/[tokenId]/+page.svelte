@@ -7,12 +7,19 @@
 	import Separator from '@/components/ui/separator/separator.svelte';
 
 	import { Send } from 'lucide-svelte';
+	import { toastInfo } from '@/utils/toasts';
 
 	export let data;
 
 	const { form: formData } = data;
 
-	const { form, errors, submitting, enhance } = superForm(formData);
+	const { form, errors, submitting, enhance } = superForm(formData, {
+		onResult: ({ result }) => {
+			if (result.type === 'redirect' && result.location === '/') {
+				toastInfo('You succesfully signed in... Welcome!');
+			}
+		}
+	});
 </script>
 
 <div class="mx-auto flex h-full w-full max-w-96 flex-col justify-center">
@@ -27,7 +34,7 @@
 			name="password"
 			type="password"
 			placeholder="******"
-			autocomplete="on"
+			autocomplete="off"
 			bind:value={$form.password}
 			error={$errors.password?.toString() || $errors._errors?.toString()}
 			on:input={() => ($errors = {})}
