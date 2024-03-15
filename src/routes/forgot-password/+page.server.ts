@@ -10,7 +10,7 @@ import { getExistingUser, setPasswordResetToken } from '@/server/db-utils';
 import { generateRandomId, getExpiresAtDate } from '@/server/auth-utils';
 import { createRateLimiter } from '@/server/rate-limiter';
 
-const resetPasswordRateLimiter = createRateLimiter(1, 'reset-password-limiter');
+const resetPasswordRateLimiter = createRateLimiter(2, 'reset-password-limiter');
 
 export const load = async (event) => {
 	await resetPasswordRateLimiter.cookieLimiter?.preflight(event);
