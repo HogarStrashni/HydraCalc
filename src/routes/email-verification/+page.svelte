@@ -20,7 +20,8 @@
 	const { form: formData } = data;
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
-		id: 'verify-email'
+		id: 'verify-email',
+		onError: 'apply'
 	});
 
 	onMount(() => {

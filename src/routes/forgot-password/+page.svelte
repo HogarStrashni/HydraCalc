@@ -16,7 +16,8 @@
 	const { form, errors, submitting, enhance } = superForm(formData, {
 		onResult: ({ result }) => {
 			showFormActionToast('reset-password', result);
-		}
+		},
+		onError: 'apply'
 	});
 </script>
 
