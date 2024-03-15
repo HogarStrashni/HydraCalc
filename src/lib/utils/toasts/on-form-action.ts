@@ -5,9 +5,7 @@ const formActionMessages = {
 	'reset-password':
 		'Reset password link has been sent... Check your email and signin with new password!',
 	'validation-code': 'Your new validation code has been sent... Check your email!',
-	'verify-email': 'You succesfully signed in... Please verify your email!',
-	'too-many-requests':
-		'You have sent too many requests in a short period of time and exceeded the rate limit'
+	'verify-email': 'You succesfully signed in... Please verify your email!'
 };
 
 export const showFormActionToast = (
