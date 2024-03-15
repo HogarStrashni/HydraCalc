@@ -11,7 +11,7 @@
 	import Typography from '@/components/custom-ui/typography.svelte';
 	import Button from '@/components/ui/button/button.svelte';
 	import Separator from '@/components/ui/separator/separator.svelte';
-	import { type RedirectCause, showRedirectToast } from '@/utils/toasts';
+	import { type RedirectCause, showRedirectToast, toastInfo } from '@/utils/toasts';
 
 	import { Send } from 'lucide-svelte';
 
@@ -20,7 +20,12 @@
 	const { form: formData } = data;
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
-		id: 'verify-email'
+		id: 'verify-email',
+		onResult: ({ result }) => {
+			if (result.type === 'redirect' && result.location === '/') {
+				toastInfo('You succesfully signed in... Welcome!');
+			}
+		}
 	});
 
 	onMount(() => {

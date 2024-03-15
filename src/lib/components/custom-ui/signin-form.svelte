@@ -9,10 +9,21 @@
 	import { Separator } from '@/components/ui/separator';
 
 	import { Chrome, LogIn } from 'lucide-svelte';
+	import { toastInfo } from '@/utils/toasts';
 
 	export let formData;
 
-	const { form, errors, submitting, enhance } = superForm(formData);
+	const { form, errors, submitting, enhance } = superForm(formData, {
+		onResult: ({ result }) => {
+			if ($page.url.pathname === '/signin' && result.type === 'redirect') {
+				toastInfo(
+					result.location === '/email-verification'
+						? 'You succesfully signed in... Please verify your email!'
+						: 'You succesfully signed in... Welcome!'
+				);
+			}
+		}
+	});
 
 	const submitButtonText = $page.url.pathname === '/signin' ? 'Sign In' : 'Sign Up';
 
