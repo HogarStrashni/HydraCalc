@@ -53,7 +53,17 @@
 			error={$errors.code?.toString() || $errors._errors?.toString()}
 			on:input={() => ($errors = {})}
 		/>
-		<form action="?/new-code" method="POST" use:svelteKitEnhance>
+		<form
+			action="?/new-code"
+			method="POST"
+			use:svelteKitEnhance={() =>
+				async ({ result, update }) => {
+					if (result.type === 'redirect' && result.location === '/email-verification') {
+						toastInfo('Your new validation code has been sent... Check your email!');
+					}
+					await update();
+				}}
+		>
 			<Button
 				type="submit"
 				variant="link"
