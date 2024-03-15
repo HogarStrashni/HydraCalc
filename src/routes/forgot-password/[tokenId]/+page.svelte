@@ -27,7 +27,7 @@
 			name="password"
 			type="password"
 			placeholder="******"
-			autocomplete="on"
+			autocomplete="off"
 			bind:value={$form.password}
 			error={$errors.password?.toString() || $errors._errors?.toString()}
 			on:input={() => ($errors = {})}

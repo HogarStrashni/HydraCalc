@@ -2,14 +2,14 @@ import { error, fail, redirect } from '@sveltejs/kit';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { newPasswordFormSchema } from '@/validations/auth-zod-schema';
+import { newPasswordFormSchema } from '@/validations';
 
 import { getExistingTokenRow, updateUserPassword } from '@/server/db-utils';
 import {
 	createSessionCookie,
 	getHashedPassword,
 	invalidateAllUserSessions,
-	isVerificationTokenValid
+	isValidExpirationDate
 } from '@/server/auth-utils';
 
 export const load = async ({ params }) => {
@@ -43,7 +43,7 @@ export const actions = {
 			setError(form, 'password', 'No valid token');
 		}
 
-		const isExistingTokenValid = isVerificationTokenValid(existingTokenRow.expiresAt);
+		const isExistingTokenValid = isValidExpirationDate(existingTokenRow.expiresAt);
 
 		if (!isExistingTokenValid) {
 			setError(form, 'password', 'Token expired');

@@ -2,7 +2,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { signinFormSchema } from '@/validations/auth-zod-schema';
+import { signinFormSchema } from '@/validations';
 
 import { createCredentialsUser, getExistingUser, setVerificationCode } from '@/server/db-utils';
 import {
@@ -12,9 +12,17 @@ import {
 	getExpiresAtDate,
 	getHashedPassword
 } from '@/server/auth-utils';
-import { sendVerificationCodeEmail } from '@/server/mail-resend.js';
+import { sendVerificationCodeEmail } from '@/server/mail-resend';
+import { setRedirectUrl } from '@/utils/toasts';
 
-export const load = async () => {
+export const load = async ({ locals: { user } }) => {
+	if (user && user.emailVerified) {
+		redirect(302, setRedirectUrl('verified'));
+	}
+
+	if (user && !user.emailVerified) {
+		redirect(302, setRedirectUrl('unverified', '/email-verification'));
+	}
 	const form = await superValidate(zod(signinFormSchema));
 
 	return {

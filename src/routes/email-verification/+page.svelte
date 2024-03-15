@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+
 	import { enhance as svelteKitEnhance } from '$app/forms';
 
 	import { superForm } from 'sveltekit-superforms';
@@ -7,6 +11,7 @@
 	import Typography from '@/components/custom-ui/typography.svelte';
 	import Button from '@/components/ui/button/button.svelte';
 	import Separator from '@/components/ui/separator/separator.svelte';
+	import { type RedirectCause, showRedirectToast, showFormActionToast } from '@/utils/toasts';
 
 	import { Send } from 'lucide-svelte';
 
@@ -16,6 +21,14 @@
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
 		id: 'verify-email'
+	});
+
+	onMount(() => {
+		const redirectCause = $page.url.searchParams.get('cause') as RedirectCause;
+		if (!redirectCause) return;
+
+		goto('/email-verification');
+		showRedirectToast(redirectCause);
 	});
 </script>
 
@@ -35,7 +48,15 @@
 			error={$errors.code?.toString() || $errors._errors?.toString()}
 			on:input={() => ($errors = {})}
 		/>
-		<form action="?/new-code" method="POST" use:svelteKitEnhance>
+		<form
+			action="?/new-code"
+			method="POST"
+			use:svelteKitEnhance={() =>
+				async ({ result, update }) => {
+					showFormActionToast('validation-code', result);
+					await update();
+				}}
+		>
 			<Button
 				type="submit"
 				variant="link"

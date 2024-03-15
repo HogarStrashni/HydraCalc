@@ -2,14 +2,14 @@ import { error, fail, redirect } from '@sveltejs/kit';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { validationCodeFormSchema } from '@/validations/auth-zod-schema';
+import { validationCodeFormSchema } from '@/validations';
 
 import {
 	createSessionCookie,
 	generateNumericCode,
 	getExpiresAtDate,
 	invalidateAllUserSessions,
-	isVerificationCodeValid
+	isValidExpirationDate
 } from '@/server/auth-utils';
 import {
 	getExistingCodeRow,
@@ -19,10 +19,11 @@ import {
 } from '@/server/db-utils';
 
 import { sendVerificationCodeEmail } from '@/server/mail-resend';
+import { setRedirectUrl } from '@/utils/toasts';
 
 export const load = async ({ locals: { user } }) => {
-	if (!user) redirect(302, '/');
-	if (user && user.emailVerified) redirect(302, '/');
+	if (!user) redirect(302, setRedirectUrl('unauthenticated'));
+	if (user && user.emailVerified) redirect(302, setRedirectUrl('verified'));
 
 	const form = await superValidate(zod(validationCodeFormSchema), {
 		id: 'verify-email'
@@ -57,7 +58,7 @@ export const actions = {
 		// delete verification code
 		await deleteExistingCodeRow(id);
 
-		const isExistingCodeValid = isVerificationCodeValid(exisingCodeRow.expiresAt);
+		const isExistingCodeValid = isValidExpirationDate(exisingCodeRow.expiresAt);
 
 		if (!isExistingCodeValid) {
 			return setError(form, 'code', 'Code expired');

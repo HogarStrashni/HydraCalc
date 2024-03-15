@@ -4,7 +4,7 @@ import { sendResetPasswordEmail } from '@/server/mail-resend';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { resetPasswordFormSchema } from '@/validations/auth-zod-schema';
+import { resetPasswordFormSchema } from '@/validations';
 
 import { getExistingUser, setPasswordResetToken } from '@/server/db-utils';
 import { generateRandomId, getExpiresAtDate } from '@/server/auth-utils';
