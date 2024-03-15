@@ -8,8 +8,13 @@ import { resetPasswordFormSchema } from '@/validations';
 
 import { getExistingUser, setPasswordResetToken } from '@/server/db-utils';
 import { generateRandomId, getExpiresAtDate } from '@/server/auth-utils';
+import { createRateLimiter } from '@/server/rate-limiter';
 
-export const load = async () => {
+const resetPasswordRateLimiter = createRateLimiter(1, 'reset-password-limiter');
+
+export const load = async (event) => {
+	await resetPasswordRateLimiter.cookieLimiter?.preflight(event);
+
 	const form = await superValidate(zod(resetPasswordFormSchema));
 
 	return {
@@ -19,7 +24,12 @@ export const load = async () => {
 };
 
 export const actions = {
-	default: async ({ request, url }) => {
+	default: async (event) => {
+		if (await resetPasswordRateLimiter.isLimited(event)) {
+			error(429, { message: 'You are being rate limited. Try again later!' });
+		}
+
+		const { request, url } = event;
 		const form = await superValidate(request, zod(resetPasswordFormSchema));
 
 		if (!form.valid) {

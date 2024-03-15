@@ -21,9 +21,7 @@
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
 		id: 'verify-email',
-		onError: ({ result }) => {
-			showFormActionToast('too-many-requests', result);
-		}
+		onError: 'apply'
 	});
 
 	onMount(() => {
@@ -55,8 +53,9 @@
 			action="?/new-code"
 			method="POST"
 			use:svelteKitEnhance={() =>
-				async ({ result }) => {
+				async ({ result, update }) => {
 					showFormActionToast('validation-code', result);
+					await update();
 				}}
 		>
 			<Button

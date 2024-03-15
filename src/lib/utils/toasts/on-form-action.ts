@@ -1,5 +1,5 @@
 import type { ActionResult } from '@sveltejs/kit';
-import { toastError, toastInfo, toastSuccess } from '.';
+import { toastInfo, toastSuccess } from '.';
 
 const formActionMessages = {
 	'reset-password':
@@ -26,10 +26,6 @@ export const showFormActionToast = (
 		case 'verify-email':
 			if (result.type === 'redirect' && result.location === '/email-verification') {
 				return toastInfo(formActionMessages['verify-email']);
-			}
-		case 'too-many-requests':
-			if (result.status === 429) {
-				toastError(formActionMessages['too-many-requests']);
 			}
 	}
 };
