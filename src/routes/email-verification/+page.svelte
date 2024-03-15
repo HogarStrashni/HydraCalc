@@ -20,12 +20,7 @@
 	const { form: formData } = data;
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
-		id: 'verify-email',
-		onResult: ({ result }) => {
-			if (result.type === 'redirect' && result.location === '/') {
-				toastInfo('You succesfully signed in... Welcome!');
-			}
-		}
+		id: 'verify-email'
 	});
 
 	onMount(() => {

@@ -15,12 +15,12 @@
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
 		onResult: ({ result }) => {
-			if ($page.url.pathname === '/signin' && result.type === 'redirect') {
-				toastInfo(
-					result.location === '/email-verification'
-						? 'You succesfully signed in... Please verify your email!'
-						: 'You succesfully signed in... Welcome!'
-				);
+			if (
+				$page.url.pathname === '/signin' &&
+				result.type === 'redirect' &&
+				result.location === '/email-verification'
+			) {
+				toastInfo('You succesfully signed in... Please verify your email!');
 			}
 		}
 	});

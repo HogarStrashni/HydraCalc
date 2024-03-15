@@ -16,7 +16,7 @@
 	const { form, errors, submitting, enhance } = superForm(formData, {
 		onResult: ({ result }) => {
 			if (result.type === 'redirect' && result.location === '/') {
-				toastInfo('Reset password link for your account has been sent... Check your email!');
+				toastInfo('Reset password link has been sent... Check your email!');
 			}
 		}
 	});
