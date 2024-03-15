@@ -20,8 +20,17 @@ import {
 
 import { sendVerificationCodeEmail } from '@/server/mail-resend';
 import { setRedirectUrl } from '@/utils/toasts';
+import { createRateLimiter } from '@/server/rate-limiter';
 
-export const load = async ({ locals: { user } }) => {
+const codeRateLimiter = createRateLimiter(5, 'verification-code-limiter');
+
+export const load = async (event) => {
+	await codeRateLimiter.cookieLimiter?.preflight(event);
+
+	const {
+		locals: { user }
+	} = event;
+
 	if (!user) redirect(302, setRedirectUrl('unauthenticated'));
 	if (user && user.emailVerified) redirect(302, setRedirectUrl('verified'));
 
@@ -36,7 +45,17 @@ export const load = async ({ locals: { user } }) => {
 };
 
 export const actions = {
-	verification: async ({ request, cookies, locals: { user } }) => {
+	verification: async (event) => {
+		if (await codeRateLimiter.isLimited(event)) {
+			error(429, 'You are being rate limited. Try again later!');
+		}
+
+		const {
+			request,
+			cookies,
+			locals: { user }
+		} = event;
+
 		if (!user) redirect(302, '/');
 		const { id } = user;
 
@@ -79,7 +98,15 @@ export const actions = {
 		redirect(302, '/');
 	},
 
-	'new-code': async ({ locals: { user } }) => {
+	'new-code': async (event) => {
+		if (await codeRateLimiter.isLimited(event)) {
+			error(429, 'You are being rate limited. Try again later!');
+		}
+
+		const {
+			locals: { user }
+		} = event;
+
 		if (!user) redirect(302, '/');
 		const { id, email } = user;
 

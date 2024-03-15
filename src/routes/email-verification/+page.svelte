@@ -20,7 +20,10 @@
 	const { form: formData } = data;
 
 	const { form, errors, submitting, enhance } = superForm(formData, {
-		id: 'verify-email'
+		id: 'verify-email',
+		onError: ({ result }) => {
+			showFormActionToast('too-many-requests', result);
+		}
 	});
 
 	onMount(() => {
