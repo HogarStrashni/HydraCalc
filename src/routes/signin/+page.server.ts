@@ -6,7 +6,7 @@ import { signinFormSchema } from '@/validations/auth-zod-schema';
 
 import { getExistingUser } from '@/server/db-utils';
 import { createSessionCookie, validatePassword } from '@/server/auth-utils';
-import { setRedirectUrl } from '@/utils/toasts/on-redirect.js';
+import { setRedirectUrl } from '@/utils/toasts';
 
 export const load = async ({ locals: { user } }) => {
 	if (user && user.emailVerified) {
