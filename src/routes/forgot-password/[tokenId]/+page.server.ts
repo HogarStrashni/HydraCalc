@@ -2,7 +2,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { newPasswordFormSchema } from '@/validations/auth-zod-schema';
+import { newPasswordFormSchema } from '@/validations';
 
 import { getExistingTokenRow, updateUserPassword } from '@/server/db-utils';
 import {

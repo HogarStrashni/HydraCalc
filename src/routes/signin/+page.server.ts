@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 
 import { superValidate, setError } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { signinFormSchema } from '@/validations/auth-zod-schema';
+import { signinFormSchema } from '@/validations';
 
 import { getExistingUser } from '@/server/db-utils';
 import { createSessionCookie, validatePassword } from '@/server/auth-utils';
