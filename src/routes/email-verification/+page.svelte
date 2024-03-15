@@ -55,9 +55,8 @@
 			action="?/new-code"
 			method="POST"
 			use:svelteKitEnhance={() =>
-				async ({ result, update }) => {
+				async ({ result }) => {
 					showFormActionToast('validation-code', result);
-					await update();
 				}}
 		>
 			<Button
