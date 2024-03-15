@@ -6,8 +6,17 @@ import { signinFormSchema } from '@/validations/auth-zod-schema';
 
 import { getExistingUser } from '@/server/db-utils';
 import { createSessionCookie, validatePassword } from '@/server/auth-utils';
+import { setRedirectUrl } from '@/utils/toasts/on-redirect.js';
 
-export const load = async () => {
+export const load = async ({ locals: { user } }) => {
+	if (user && user.emailVerified) {
+		redirect(302, setRedirectUrl('verified'));
+	}
+
+	if (user && !user.emailVerified) {
+		redirect(302, setRedirectUrl('unverified', '/email-verification'));
+	}
+
 	const form = await superValidate(zod(signinFormSchema));
 
 	return {
@@ -47,6 +56,11 @@ export const actions = {
 			path: '.',
 			...sessionCookie.attributes
 		});
+
+		const isEmailVerified = existingUser.emailVerified;
+		if (!isEmailVerified) {
+			redirect(302, '/email-verification');
+		}
 
 		redirect(302, '/');
 	}
