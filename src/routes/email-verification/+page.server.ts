@@ -19,10 +19,11 @@ import {
 } from '@/server/db-utils';
 
 import { sendVerificationCodeEmail } from '@/server/mail-resend';
+import { setRedirectUrl } from '@/utils/toasts';
 
 export const load = async ({ locals: { user } }) => {
-	if (!user) redirect(302, '/');
-	if (user && user.emailVerified) redirect(302, '/');
+	if (!user) redirect(302, setRedirectUrl('unauthenticated'));
+	if (user && user.emailVerified) redirect(302, setRedirectUrl('verified'));
 
 	const form = await superValidate(zod(validationCodeFormSchema), {
 		id: 'verify-email'
