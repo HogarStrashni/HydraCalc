@@ -3,9 +3,8 @@
 	import { fade } from 'svelte/transition';
 	import { page, navigating } from '$app/stores';
 
-	import ProgressBar from '@/components/custom-ui/progress-bar.svelte';
-	import Header from './header.svelte';
 	import { Toasts } from 'svoast';
+	import { Header, ProgressBar } from '@/components/custom-ui/layout';
 
 	// delay LoadingStage for 200 ms
 	let isProgressBar = false;
