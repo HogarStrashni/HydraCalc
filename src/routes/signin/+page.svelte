@@ -6,7 +6,7 @@
 	} from '@/components/custom-ui/auth-form';
 	import { ForgotPasswordLink } from './components';
 
-	import Typography from '@/components/custom-ui/typography.svelte';
+	import { Typography } from '@/components/custom-ui/typography';
 	import { Button } from '@/components/ui/button';
 
 	export let data;

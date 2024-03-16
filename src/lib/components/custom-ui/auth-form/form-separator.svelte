@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Typography from '@/components/custom-ui/typography.svelte';
+	import { Typography } from '@/components/custom-ui/typography';
 	import { Separator } from '@/components/ui/separator';
 </script>
 

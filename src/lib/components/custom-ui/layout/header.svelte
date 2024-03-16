@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 
 	import { Button } from '@/components/ui/button';
-	import Typography from '@/components/custom-ui/typography.svelte';
+	import { Typography } from '@/components/custom-ui/typography';
 
 	import { ArrowLeft, LogIn, LogOut } from 'lucide-svelte';
 

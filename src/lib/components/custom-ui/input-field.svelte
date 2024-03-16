@@ -5,7 +5,7 @@
 
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import Typography from './typography.svelte';
+	import { Typography } from '$lib/components/custom-ui/typography';
 
 	import { AlertCircle } from 'lucide-svelte';
 

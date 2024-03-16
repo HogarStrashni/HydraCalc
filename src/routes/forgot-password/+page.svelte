@@ -2,7 +2,7 @@
 	import { superForm } from 'sveltekit-superforms';
 
 	import InputField from '@/components/custom-ui/input-field.svelte';
-	import Typography from '@/components/custom-ui/typography.svelte';
+	import { Typography } from '@/components/custom-ui/typography';
 	import { Button } from '@/components/ui/button';
 	import { Separator } from '@/components/ui/separator';
 	import { showFormActionToast } from '@/utils/toasts';
