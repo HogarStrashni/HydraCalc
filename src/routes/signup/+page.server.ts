@@ -2,8 +2,8 @@ import { error, fail, redirect } from '@sveltejs/kit';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { signinFormSchema } from '@/validations';
 
+import { signinFormSchema } from '@/validations';
 import { createCredentialsUser, getExistingUser, setVerificationCode } from '@/server/db-utils';
 import {
 	createSessionCookie,

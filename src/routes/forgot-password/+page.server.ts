@@ -1,11 +1,10 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 
-import { sendResetPasswordEmail } from '@/server/mail-resend';
-
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { resetPasswordFormSchema } from '@/validations';
 
+import { resetPasswordFormSchema } from '@/validations';
+import { sendResetPasswordEmail } from '@/server/mail-resend';
 import { getExistingUser, setPasswordResetToken } from '@/server/db-utils';
 import { generateRandomId, getExpiresAtDate } from '@/server/auth-utils';
 import { createRateLimiter } from '@/server/rate-limiter';

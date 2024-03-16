@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 
+	import { Send } from 'lucide-svelte';
+
 	import { InputField } from '@/components/custom-ui/input-field';
 	import { Typography } from '@/components/custom-ui/typography';
 	import { Button } from '@/components/ui/button';
 	import { Separator } from '@/components/ui/separator';
 	import { showFormActionToast } from '@/utils/toasts';
-
-	import { Send } from 'lucide-svelte';
 
 	export let data;
 

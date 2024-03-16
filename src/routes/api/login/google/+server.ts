@@ -1,9 +1,8 @@
 import { redirect } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 
-import { google } from '$lib/server/auth';
-
 import { generateCodeVerifier, generateState } from 'arctic';
+import { google } from '$lib/server/auth';
 
 export const GET = async ({ cookies }) => {
 	const state = generateState();

@@ -1,4 +1,4 @@
-import { toastError, toastInfo } from '@/utils/toasts';
+import { toastError, toastInfo } from '.';
 
 const redirectCause = {
 	unauthenticated: 'You do not have permission to access the requested page. Please sign in!',

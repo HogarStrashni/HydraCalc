@@ -1,5 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 
+import { OAuth2RequestError } from 'arctic';
+
 import { createOAuthUser, getExistingUser, setOAuthUserEmailVerifiedTrue } from '@/server/db-utils';
 import {
 	createSessionCookie,
@@ -7,8 +9,6 @@ import {
 	getGoogleAuthenticatedUser,
 	getHashedPassword
 } from '@/server/auth-utils';
-
-import { OAuth2RequestError } from 'arctic';
 
 export const GET = async ({ url, cookies }) => {
 	try {

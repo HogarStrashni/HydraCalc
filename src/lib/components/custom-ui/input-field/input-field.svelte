@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { cn } from '$lib/utils/style-transition';
-
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
+	import { AlertCircle } from 'lucide-svelte';
+
+	import { cn } from '$lib/utils/style-transition';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { Typography } from '$lib/components/custom-ui/typography';
-
-	import { AlertCircle } from 'lucide-svelte';
 
 	export let type: HTMLInputAttributes['type'] = 'text';
 	export let name: HTMLInputAttributes['name'] = undefined;

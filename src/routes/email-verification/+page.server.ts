@@ -2,8 +2,8 @@ import { error, fail, redirect } from '@sveltejs/kit';
 
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { validationCodeFormSchema } from '@/validations';
 
+import { validationCodeFormSchema } from '@/validations';
 import {
 	createSessionCookie,
 	generateNumericCode,
@@ -17,7 +17,6 @@ import {
 	updateEmailVerifiedTrue,
 	setVerificationCode
 } from '@/server/db-utils';
-
 import { sendVerificationCodeEmail } from '@/server/mail-resend';
 import { setRedirectUrl } from '@/utils/toasts';
 import { createRateLimiter } from '@/server/rate-limiter';

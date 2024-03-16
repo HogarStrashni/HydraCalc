@@ -2,12 +2,11 @@
 	import { page } from '$app/stores';
 
 	import { superForm } from 'sveltekit-superforms';
-
-	import { InputField } from '@/components/custom-ui/input-field';
-	import { Button } from '@/components/ui/button';
-
-	import { showFormActionToast } from '@/utils/toasts';
 	import { LogIn } from 'lucide-svelte';
+
+	import { Button } from '@/components/ui/button';
+	import { InputField } from '@/components/custom-ui/input-field';
+	import { showFormActionToast } from '@/utils/toasts';
 
 	export let submitButtonText: string | undefined = undefined;
 	export let formData;

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
+	import { ArrowLeft, LogIn, LogOut } from 'lucide-svelte';
+
 	import { Button } from '@/components/ui/button';
 	import { Typography } from '@/components/custom-ui/typography';
-
-	import { ArrowLeft, LogIn, LogOut } from 'lucide-svelte';
 
 	$: isLoginRoute = ['/signin', '/signup'].includes($page.url.pathname);
 	$: user = $page.data.user;

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Typography } from '@/components/custom-ui/typography';
 	import { Separator } from '@/components/ui/separator';
+	import { Typography } from '@/components/custom-ui/typography';
 </script>
 
 <div class="relative mt-8 flex w-full items-center justify-center text-sm">

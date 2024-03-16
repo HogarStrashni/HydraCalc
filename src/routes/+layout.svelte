@@ -4,6 +4,7 @@
 	import { page, navigating } from '$app/stores';
 
 	import { Toasts } from 'svoast';
+
 	import { Header, ProgressBar } from '@/components/custom-ui/layout';
 
 	// delay LoadingStage for 200 ms

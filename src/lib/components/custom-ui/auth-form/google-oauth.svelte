@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from '@/components/ui/button';
 	import { Chrome } from 'lucide-svelte';
+	import { Button } from '@/components/ui/button';
 
 	let signingInWithGoogle = false;
 </script>

@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 
 	import { superForm } from 'sveltekit-superforms';
+	import { Send } from 'lucide-svelte';
 
 	import { InputField } from '@/components/custom-ui/input-field';
 	import { Typography } from '@/components/custom-ui/typography';
@@ -11,8 +12,6 @@
 	import { Separator } from '@/components/ui/separator';
 	import { CodeRequestForm } from './components';
 	import { type RedirectCause, showRedirectToast } from '@/utils/toasts';
-
-	import { Send } from 'lucide-svelte';
 
 	export let data;
 
