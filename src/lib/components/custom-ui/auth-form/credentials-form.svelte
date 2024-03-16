@@ -3,7 +3,7 @@
 
 	import { superForm } from 'sveltekit-superforms';
 
-	import InputField from '@/components/custom-ui/input-field.svelte';
+	import { InputField } from '@/components/custom-ui/input-field';
 	import { Button } from '@/components/ui/button';
 
 	import { showFormActionToast } from '@/utils/toasts';

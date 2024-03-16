@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 
-	import InputField from '@/components/custom-ui/input-field.svelte';
+	import { InputField } from '@/components/custom-ui/input-field';
 	import { Typography } from '@/components/custom-ui/typography';
 	import { Button } from '@/components/ui/button';
 	import { Separator } from '@/components/ui/separator';
