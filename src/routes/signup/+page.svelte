@@ -1,6 +1,10 @@
 <script lang="ts">
-	import SigninForm from '@/components/custom-ui/signin-form.svelte';
-	import Typography from '@/components/custom-ui/typography.svelte';
+	import {
+		GoogleAuthorization,
+		FormSeparator,
+		CredentialsForm
+	} from '@/components/custom-ui/auth-form';
+	import { Typography } from '@/components/custom-ui/typography';
 	import { Button } from '@/components/ui/button';
 
 	export let data;
@@ -12,7 +16,9 @@
 	<Typography as="h1" class="text-xl">Get started</Typography>
 	<Typography as="p" class="mt-2 text-sm font-medium opacity-50">Create a new account</Typography>
 
-	<SigninForm {formData} />
+	<GoogleAuthorization />
+	<FormSeparator />
+	<CredentialsForm {formData} submitButtonText="Sign Up" />
 
 	<div class="mt-8 flex justify-center">
 		<Typography as="p" class="h-full text-sm font-medium opacity-70">Have an account?</Typography>

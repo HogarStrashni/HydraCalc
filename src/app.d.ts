@@ -9,7 +9,11 @@ declare global {
 			user: User | null;
 			session: Session | null;
 		}
-		// interface PageData {}
+		interface PageData {
+			user: User | null;
+			session: Session | null;
+			title: string | undefined;
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
+	import { AlertCircle, Home } from 'lucide-svelte';
+
 	import { Button } from '@/components/ui/button';
 	import { errorList } from '$lib/utils/error-list';
-
-	import { AlertCircle, Home } from 'lucide-svelte';
 
 	const status = $page.status as keyof typeof errorList;
 	const errorMessage = $page.error?.message;

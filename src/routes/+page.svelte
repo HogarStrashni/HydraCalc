@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import Typography from '@/components/custom-ui/typography.svelte';
+	import { Typography } from '@/components/custom-ui/typography';
 	import { type RedirectCause, showRedirectToast } from '@/utils/toasts';
 
 	$: ({ user, session } = $page.data);

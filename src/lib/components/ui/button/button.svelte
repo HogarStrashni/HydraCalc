@@ -3,7 +3,7 @@
 	import { cn } from '$lib/utils/style-transition';
 	import { buttonVariants, type Props, type Events } from '.';
 
-	import LoadingSpinner from '@/components/custom-ui/loading-spinner.svelte';
+	import { LoadingSpinner } from '@/components/custom-ui/loading-spinner';
 
 	type $$Props = Props & { icon?: ConstructorOfATypedSvelteComponent; isLoading?: boolean };
 	type $$Events = Events;

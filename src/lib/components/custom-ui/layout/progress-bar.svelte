@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-	import { onMount } from 'svelte';
 
 	const progress = tweened(0, {
 		easing: cubicOut,
