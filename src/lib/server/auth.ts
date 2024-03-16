@@ -1,4 +1,4 @@
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL } from '$env/static/private';
 import { dev } from '$app/environment';
 
 import { Lucia } from 'lucia';
@@ -22,7 +22,7 @@ export const lucia = new Lucia(adapter, {
 // GOOGLE OAUTH
 const REDIRECT_URI = dev
 	? 'http://localhost:5173/api/login/google/callback'
-	: 'https://hydra-calc.vercel.app/api/login/google/callback';
+	: `${BASE_URL}/api/login/google/callback`;
 
 export const google = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, REDIRECT_URI);
 
