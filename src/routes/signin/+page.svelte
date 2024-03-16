@@ -1,5 +1,11 @@
 <script lang="ts">
-	import SigninForm from '@/components/custom-ui/signin-form.svelte';
+	import {
+		GoogleAuthorization,
+		FormSeparator,
+		CredentialsForm,
+		ForgotPasswordLink
+	} from '@/components/custom-ui/auth-form';
+
 	import Typography from '@/components/custom-ui/typography.svelte';
 	import { Button } from '@/components/ui/button';
 
@@ -14,7 +20,11 @@
 		Sign in to your account
 	</Typography>
 
-	<SigninForm {formData} />
+	<GoogleAuthorization />
+	<FormSeparator />
+	<CredentialsForm {formData} submitButtonText="Sign In">
+		<ForgotPasswordLink />
+	</CredentialsForm>
 
 	<div class="mt-8 flex justify-center">
 		<Typography as="p" class="h-full text-sm font-medium opacity-70">
