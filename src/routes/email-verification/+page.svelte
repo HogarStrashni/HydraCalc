@@ -3,15 +3,14 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { enhance as svelteKitEnhance } from '$app/forms';
-
 	import { superForm } from 'sveltekit-superforms';
 
 	import InputField from '@/components/custom-ui/input-field.svelte';
 	import Typography from '@/components/custom-ui/typography.svelte';
-	import Button from '@/components/ui/button/button.svelte';
-	import Separator from '@/components/ui/separator/separator.svelte';
-	import { type RedirectCause, showRedirectToast, showFormActionToast } from '@/utils/toasts';
+	import { Button } from '@/components/ui/button';
+	import { Separator } from '@/components/ui/separator';
+	import { CodeRequestForm } from './components';
+	import { type RedirectCause, showRedirectToast } from '@/utils/toasts';
 
 	import { Send } from 'lucide-svelte';
 
@@ -49,23 +48,7 @@
 			error={$errors.code?.toString() || $errors._errors?.toString()}
 			on:input={() => ($errors = {})}
 		/>
-		<form
-			action="?/new-code"
-			method="POST"
-			use:svelteKitEnhance={() =>
-				async ({ result, update }) => {
-					showFormActionToast('validation-code', result);
-					await update();
-				}}
-		>
-			<Button
-				type="submit"
-				variant="link"
-				class="text-forground absolute -top-2 right-0 px-0 opacity-50"
-			>
-				Request new Code
-			</Button>
-		</form>
+		<CodeRequestForm />
 		<Separator class="mt-4" />
 		<Button
 			type="submit"
