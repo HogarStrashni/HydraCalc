@@ -6,6 +6,9 @@ const config = {
 	content: ["./src/**/*.{html,js,svelte,ts}"],
   safelist: ["dark"],
 	theme: {
+		fontFamily: {
+				'open-sans': ['OpenSans', 'sans-serif']
+			},
 		container: {
 			center: true,
 			padding: "2rem",
