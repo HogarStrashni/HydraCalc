@@ -6,5 +6,6 @@ declare namespace NodeJS {
 		GOOGLE_CLIENT_SECRET: string;
 		RESEND_API_KEY: string;
 		RATE_LIMITER_SECRET: string;
+		BASE_URL: string;
 	}
 }
