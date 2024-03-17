@@ -1,38 +1,63 @@
-# create-svelte
+# HydraCalc
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This small web application is a comprehensive tool designed to simplify hydraulic engineering tasks associated with water distribution networks and storm/sanitary sewage networks. 
 
-## Creating a project
+#### Water Distribution Network:
 
-If you're seeing this, you've probably already done this step.
+- Pipe Flow Calculations: Determine the flow rates and velocities within the network, ensuring optimal distribution of water resources
+- Pressure Drop Analysis: Evaluate pressure variations throughout the network
+
+#### Storm/Sanitary Sewage Network:
+
+- Sewer Flow Calculations: Accurately model sewer flow dynamics to predict system behavior under various conditions
+- Pipe Sizing and Capacity Analysis: Determine optimal pipe sizes and capacities to accommodate expected flow rates and prevent overflow or blockages
+
+HydraCalc's authentication system allows users to securely sign in and sign up using email/password credentials (with email verification) or Google OAuth.
+
+## Technologies Used
+
+- **Framework**: [SvelteKit](https://kit.svelte.dev)
+- **Database**: [Turso](https://turso.tech) with [Drizzle ORM](https://orm.drizzle.team)
+- **Authentication Library**: [Lucia](https://lucia-auth.com)
+- **CSS**: [Tailwind CSS](https://tailwindcss.com/) with [shadcn-svelte](https://www.shadcn-svelte.com)
+- **Form Validation**: [Zod](https://zod.dev)
+- **Form Handling**: [SvelteKit Superforms](https://superforms.rocks)
+- **Toast Notifications**: [Svoast](https://svoast.vercel.app)
+
+## Learn More
+
+Take a look at the following resources:
+
+- [Learn Svelte](https://learn.svelte.dev/tutorial/welcome-to-svelte) - an interactive Svelte tutorial.
+- [Learn SvelteKit](https://learn.svelte.dev/tutorial/introducing-sveltekit) - an interactive SvelteKit tutorial.
+- [The Copenhagen Book](https://thecopenhagenbook.com) - General guideline on implementing auth in web applications.
+
+## Setup
+
+### Prerequisites
+
+- Node.js and pnpm installed on your machine
+
+Copy `env.example` to `.env` and replace the provide correct values for env variables.
+
+### Getting Started
+
+First, install dependencies 
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+pnpm i
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+and run the development server:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm dev
 ```
 
-## Building
+Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
 
-To create a production version of your app:
+## Database migrations
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment..
+- use `pnpm db:generate` to generate migration files
+- use `pnpm db:drop` to undo a migration (select migration in next step)
+- use `pnpm db:push` to apply migrations to the database
